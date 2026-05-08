@@ -61,3 +61,9 @@ class RdvConfirm extends MedecinEvent {
   @override
   List<Object> get props => [doctorId, type, reason];
 }
+
+class MedecinsRefraichies extends MedecinEvent {
+  const MedecinsRefraichies();
+  @override
+  List<Object> get props => [];
+}

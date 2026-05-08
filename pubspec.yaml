@@ -40,7 +40,12 @@ dependencies:
   equatable: ^2.0.8
   supabase_flutter: ^2.12.4
   uuid: ^4.5.3
-  qr_flutter: ^4.1.0
+  qr_flutter: ^4.1.0  
+  hugeicons: ^1.1.6
+  phosphor_flutter: ^2.1.0
+  flutter_localizations:
+    sdk: flutter
+  flutter_gen: ^5.14.1
 
 dev_dependencies:
   flutter_test:
@@ -63,11 +68,24 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  generate: true
 
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/logo.png
   #   - images/a_dot_ham.jpeg
+  fonts:
+  # Police principale — supporte l'arabe et le latin
+  - family: Cairo
+    fonts:
+      - asset: assets/fonts/Cairo/static/Cairo-Regular.ttf
+        weight: 400
+      - asset: assets/fonts/Cairo/static/Cairo-Medium.ttf
+        weight: 500
+      - asset: assets/fonts/Cairo/static/Cairo-Bold.ttf
+        weight: 700
+      - asset: assets/fonts/Cairo/static/Cairo-ExtraBold.ttf
+        weight: 800
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

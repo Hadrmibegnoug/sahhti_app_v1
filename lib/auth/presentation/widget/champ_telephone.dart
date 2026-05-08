@@ -33,7 +33,7 @@ class ChampTelephone extends StatelessWidget {
           // ── Champ numéro ────────────────────────────
           Expanded(
             child: TextFormField(
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(color: Colors.black, fontFamily: 'Cairo'),
               controller: controller,
               keyboardType: keyboard,
               obscureText: obscureText,

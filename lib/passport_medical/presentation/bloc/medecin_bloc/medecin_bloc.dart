@@ -11,6 +11,7 @@ class MedecinBloc extends Bloc<MedecinEvent, MedecinState> {
 
   MedecinBloc(this._datasource) : super(MedecinInitial()) {
     on<MedecinPageOuverte>(_onPageOuverte);
+    on<MedecinsRefraichies>(_onRafraichir);
     on<SpecialitySelected>(_onSpecialitySelected);
     on<MedecinSearchChanged>(_onSearch);
     on<MedecinDetailOuvert>(_onDetailOuvert);
@@ -25,6 +26,19 @@ class MedecinBloc extends Bloc<MedecinEvent, MedecinState> {
     Emitter<MedecinState> emit,
   ) async {
     emit(MedecinLoading());
+    try {
+      final doctors = await _datasource.getAllDoctor();
+      emit(MedecinLoaded(tousLesdoctors: doctors, medecinsFiltres: doctors));
+    } catch (e) {
+      log('MedecinBloc erreur: $e');
+      emit(const MedecinError(message: 'Impossible de charger les médecins.'));
+    }
+  }
+
+  Future<void> _onRafraichir(
+    MedecinsRefraichies event,
+    Emitter<MedecinState> emit,
+  ) async {
     try {
       final doctors = await _datasource.getAllDoctor();
       emit(MedecinLoaded(tousLesdoctors: doctors, medecinsFiltres: doctors));
@@ -150,7 +164,7 @@ class MedecinBloc extends Bloc<MedecinEvent, MedecinState> {
       );
       return;
     }
-
+    final stateAvant = s;
     emit(RdvEnCours());
     try {
       final patientConnected = await _datasource.getPatientConnecte();
@@ -167,8 +181,12 @@ class MedecinBloc extends Bloc<MedecinEvent, MedecinState> {
         reason: event.reason,
       );
       emit(RdvSucces(rdv));
+      await Future.delayed(const Duration(milliseconds: 500));
+      final doctors = await _datasource.getAllDoctor();
+      emit(MedecinLoaded(tousLesdoctors: doctors, medecinsFiltres: doctors));
     } catch (e) {
       log('RDV erreur: $e');
+      emit(stateAvant);
       emit(const MedecinError(message: 'Impossible de prendre le RDV.'));
     }
   }

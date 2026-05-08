@@ -19,3 +19,16 @@ class ConversationsRefraichies extends ConversationEvent {
   @override
   List<Object> get props => [];
 }
+
+// ← NOUVEAU : charger les médecins pour le choix
+class DocteursPourChatCharges extends ConversationEvent {
+  const DocteursPourChatCharges();
+}
+
+// ← NOUVEAU : patient veut démarrer une conversation avec un médecin
+class NouvelleConversationDemandee extends ConversationEvent {
+  final int doctorId;
+  const NouvelleConversationDemandee(this.doctorId);
+  @override
+  List<Object> get props => [doctorId];
+}

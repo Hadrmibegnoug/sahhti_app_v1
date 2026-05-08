@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sahha_pass/core/constants/app_alerts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
 import '../../../core/constants/app_colors.dart';
 import '../../../core/router/app_router.dart';
@@ -57,12 +58,7 @@ class _RegisterPinView extends StatelessWidget {
             state.pinConfirmation.length == 4) {
           if (!state.correspondent) {
             // Les PIN ne correspondent pas → réinitialiser
-            ScaffoldMessenger.of(ctx).showSnackBar(
-              const SnackBar(
-                content: Text('Les codes ne correspondent pas.'),
-                backgroundColor: Colors.red,
-              ),
-            );
+            AppAlerts.erreur(context, 'Les codes ne correspondent pas.');
             ctx.read<AuthBloc>().add(PinInscriptionInitialise());
             return;
           }
@@ -77,9 +73,7 @@ class _RegisterPinView extends StatelessWidget {
         }
 
         if (state is AuthErreur) {
-          ScaffoldMessenger.of(ctx).showSnackBar(
-            SnackBar(content: Text(state.message), backgroundColor: Colors.red),
-          );
+          AppAlerts.erreur(ctx, state.message);
           ctx.read<AuthBloc>().add(PinInscriptionInitialise());
         }
       },

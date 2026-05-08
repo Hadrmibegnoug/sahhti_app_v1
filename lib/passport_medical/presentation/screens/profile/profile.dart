@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sahha_pass/core/constants/app_alerts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../core/constants/app_colors.dart';
@@ -39,31 +40,19 @@ class _ProfileView extends StatelessWidget {
 
         // Mise à jour réussie
         if (state is ProfileMisAJourSucces) {
-          ScaffoldMessenger.of(ctx).showSnackBar(
-            const SnackBar(
-              content: Text('Profil mis à jour ✓'),
-              backgroundColor: Colors.green,
-            ),
-          );
+          AppAlerts.succes(ctx, 'Profil mis à jour');
           // Recharger le profil
           ctx.read<ProfileBloc>().add(ProfileCharge());
         }
 
         // PIN changé
         if (state is ProfilePinSucces) {
-          ScaffoldMessenger.of(ctx).showSnackBar(
-            const SnackBar(
-              content: Text('Code PIN changé avec succès ✓'),
-              backgroundColor: Colors.green,
-            ),
-          );
+          AppAlerts.succes(ctx, 'Code PIN changé avec succès');
         }
 
         // Erreur
         if (state is ProfileErreur) {
-          ScaffoldMessenger.of(ctx).showSnackBar(
-            SnackBar(content: Text(state.message), backgroundColor: Colors.red),
-          );
+          AppAlerts.erreur(context, state.message);
         }
       },
       child: BlocBuilder<ProfileBloc, ProfileState>(
@@ -215,7 +204,20 @@ class _ProfileView extends StatelessWidget {
                                 ),
                               )
                             : null,
-                        onTap: () => _confirmerDeconnexion(context),
+                        onTap: () async {
+                          final confirm = await AppAlerts.confirmation(
+                            context,
+                            titre: 'Se déconnecter',
+                            message: 'Voulez-vous vraiment vous déconnecter ?',
+                            labelConfirmer: 'Déconnecter',
+                            dangereux: true,
+                          );
+                          if (confirm == true) {
+                            context.read<ProfileBloc>().add(
+                              ProfileDeconnexionDemandee(),
+                            );
+                          }
+                        },
                       ),
                     ],
                   ),
@@ -559,15 +561,11 @@ class _SheetChangerPinState extends State<_SheetChangerPin> {
 
   void _changer() {
     if (_nouveauCtrl.text != _confirmCtrl.text) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Les codes ne correspondent pas.')),
-      );
+      AppAlerts.erreur(context, 'Les codes ne correspondent pas.');
       return;
     }
     if (_ancienCtrl.text.length < 4 || _nouveauCtrl.text.length < 4) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('4 chiffres requis.')));
+      AppAlerts.erreur(context, 'Le code doit contenir au moins 4 chiffres.');
       return;
     }
     context.read<ProfileBloc>().add(

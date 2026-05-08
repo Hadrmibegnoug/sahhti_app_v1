@@ -30,4 +30,8 @@ class DossierSpecialiteSelectionne extends HomeEvent {
   List<Object> get props => [specialite];
 }
 
+class HomeRafraichi extends HomeEvent {
+  const HomeRafraichi();
+}
+
 class DossierSpecialiteFermer extends HomeEvent {}

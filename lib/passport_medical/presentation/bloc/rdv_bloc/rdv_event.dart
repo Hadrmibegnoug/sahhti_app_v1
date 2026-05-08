@@ -13,3 +13,9 @@ class RdvDataLoaded extends RdvEvent {
 }
 
 class RdvSelectionne extends RdvEvent {}
+
+class RdvRafraichies extends RdvEvent {
+  const RdvRafraichies();
+  @override
+  List<Object> get props => [];
+}

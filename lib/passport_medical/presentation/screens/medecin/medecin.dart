@@ -45,87 +45,104 @@ class _Medecin extends StatelessWidget {
               ? state.medecinsFiltres
               : <DoctorsModel>[];
 
-          return CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
-                  child: TextFormField(
-                    onChanged: (query) => context.read<MedecinBloc>().add(
-                      MedecinSearchChanged(query),
-                    ),
-                    decoration: InputDecoration(
-                      suffixIcon: Icon(Icons.location_on),
-                      labelText: "Nom du médecin",
-                      prefixIcon: Icon(Icons.search),
-                    ),
-                  ),
-                ),
-              ),
-              SliverToBoxAdapter(
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.04,
-                  child: BlocBuilder<MedecinBloc, MedecinState>(
-                    builder: (context, state) {
-                      final active = state is MedecinLoaded
-                          ? state.specialityActive
-                          : null;
-                      return ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        itemCount: MedecinListPage._specialites.length,
-                        separatorBuilder: (_, _) => const SizedBox(width: 8),
-                        itemBuilder: (context, index) {
-                          final spec = MedecinListPage._specialites[index];
-                          final isTous = spec == 'Tous';
-                          final isActivie = isTous
-                              ? active == null
-                              : active == spec;
-                          return ChoiceChip(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            label: Text(spec),
-                            selected: isActivie,
-                            onSelected: (_) => context.read<MedecinBloc>().add(
-                              SpecialitySelected(isTous ? null : spec),
-                            ),
-                          );
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ),
-              SliverToBoxAdapter(child: SizedBox(height: 10)),
-
-              if (state is MedecinLoading)
-                SliverFillRemaining(
-                  child: Center(child: CircularProgressIndicator()),
-                ),
-
-              if (state is MedecinError)
-                SliverFillRemaining(child: Center(child: Text(state.message))),
-
-              if (state is MedecinLoaded)
-                medecins.isEmpty
-                    ? SliverFillRemaining(
-                        child: Center(child: Text("Aucun Medecin Trouvé")),
-                      )
-                    : SliverList(
-                        //shrinkWrap: true,
-                        //padding: EdgeInsets.symmetric(horizontal: 16),
-                        delegate: SliverChildBuilderDelegate(
-                          (context, index) => Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5),
-                            child: _customDoctorCard(
-                              doctorsModel: medecins[index],
-                            ),
-                          ),
-                          childCount: medecins.length,
-                        ),
+          return RefreshIndicator(
+            onRefresh: () async {
+              context.read<MedecinBloc>().add(const MedecinPageOuverte());
+              await context.read<MedecinBloc>().stream.firstWhere(
+                (s) => s is MedecinLoaded || s is MedecinError,
+              );
+            },
+            child: CustomScrollView(
+              slivers: [
+                SliverToBoxAdapter(
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
+                    child: TextFormField(
+                      onChanged: (query) => context.read<MedecinBloc>().add(
+                        MedecinSearchChanged(query),
                       ),
-            ],
+                      decoration: InputDecoration(
+                        suffixIcon: Icon(Icons.location_on),
+                        labelText: "Nom du médecin",
+                        prefixIcon: Icon(Icons.search),
+                      ),
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.04,
+                    child: BlocBuilder<MedecinBloc, MedecinState>(
+                      builder: (context, state) {
+                        final active = state is MedecinLoaded
+                            ? state.specialityActive
+                            : null;
+                        return ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          itemCount: MedecinListPage._specialites.length,
+                          separatorBuilder: (_, _) => const SizedBox(width: 8),
+                          itemBuilder: (context, index) {
+                            final spec = MedecinListPage._specialites[index];
+                            final isTous = spec == 'Tous';
+                            final isActivie = isTous
+                                ? active == null
+                                : active == spec;
+                            return ChoiceChip(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              label: Text(spec),
+                              selected: isActivie,
+                              onSelected: (_) =>
+                                  context.read<MedecinBloc>().add(
+                                    SpecialitySelected(isTous ? null : spec),
+                                  ),
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(child: SizedBox(height: 10)),
+
+                if (state is MedecinLoading)
+                  SliverFillRemaining(
+                    child: Center(child: CircularProgressIndicator()),
+                  ),
+
+                if (state is MedecinError)
+                  SliverFillRemaining(
+                    child: Center(child: Text(state.message)),
+                  ),
+
+                if (state is MedecinLoaded)
+                  medecins.isEmpty
+                      ? SliverFillRemaining(
+                          child: Center(child: Text("Aucun Medecin Trouvé")),
+                        )
+                      : SliverList(
+                          //shrinkWrap: true,
+                          //padding: EdgeInsets.symmetric(horizontal: 16),
+                          delegate: SliverChildBuilderDelegate(
+                            (context, index) => Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 5),
+                              child: RefreshIndicator(
+                                color: AppColors.primary,
+                                onRefresh: () async => context
+                                    .read<MedecinBloc>()
+                                    .add(const MedecinsRefraichies()),
+                                child: _customDoctorCard(
+                                  doctorsModel: medecins[index],
+                                ),
+                              ),
+                            ),
+                            childCount: medecins.length,
+                          ),
+                        ),
+              ],
+            ),
           );
         },
       ),
@@ -146,6 +163,8 @@ class _Medecin extends StatelessWidget {
   //     ),
   //   );
   // }
+  // _customDoctorCard(
+  //                             doctorsModel: medecins[index],
 }
 
 class _customDoctorCard extends StatelessWidget {

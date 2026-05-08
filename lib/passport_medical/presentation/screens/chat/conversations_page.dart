@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sahha_pass/core/constants/app_alerts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:sahha_pass/core/constants/app_colors.dart';
 import '../../../data/datasources/chat_datasource.dart';
@@ -8,6 +9,7 @@ import '../../bloc/chat_bloc/conversaton_bloc/conversation_bloc.dart';
 import '../../bloc/chat_bloc/conversaton_bloc/conversation_event.dart';
 import '../../bloc/chat_bloc/conversaton_bloc/conversation_state.dart';
 import 'chat_page.dart';
+import 'choix_medecin_page.dart'; // ← import séparé
 
 class ConversationsPage extends StatelessWidget {
   const ConversationsPage({super.key});
@@ -17,7 +19,7 @@ class ConversationsPage extends StatelessWidget {
     return BlocProvider(
       create: (_) =>
           ConversationBloc(ChatDatasource(Supabase.instance.client))
-            ..add(ConversationsChargees()),
+            ..add(const ConversationsChargees()),
       child: const _ConversationsView(),
     );
   }
@@ -28,85 +30,95 @@ class _ConversationsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: BlocBuilder<ConversationBloc, ConversationState>(
-        builder: (context, state) {
-          if (state is ConversationChargement) {
-            return const Center(child: CircularProgressIndicator());
-          }
+    return BlocListener<ConversationBloc, ConversationState>(
+      listener: (ctx, state) {
+        // Navigation vers le chat après création de conversation
+        if (state is ConversationCreee) {
+          Navigator.of(ctx).push(
+            MaterialPageRoute(
+              builder: (_) => ChatPage(conversation: state.conversation),
+            ),
+          );
+          // Rafraîchir la liste après retour
+          ctx.read<ConversationBloc>().add(const ConversationsRefraichies());
+        }
+        if (state is ConversationErreur) {
+          AppAlerts.erreur(context, state.message);
+        }
+      },
+      child: Scaffold(
+        // ← FAB pour démarrer une nouvelle conversation
+        floatingActionButton: _FabNouvelleConversation(),
+        body: BlocBuilder<ConversationBloc, ConversationState>(
+          builder: (context, state) {
+            if (state is ConversationChargement) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-          if (state is ConversationErreur) {
-            return Center(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.error_outline, size: 48, color: Colors.grey),
-                  const SizedBox(height: 12),
-                  Text(
-                    state.message,
-                    style: const TextStyle(color: Colors.grey),
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () => context.read<ConversationBloc>().add(
-                      const ConversationsChargees(),
-                    ),
-                    child: const Text('Réessayer'),
-                  ),
-                ],
-              ),
-            );
-          }
+            if (state is ConversationErreur) {
+              return _EtatErreur(message: state.message);
+            }
 
-          if (state is ConversationLoaded) {
-            if (state.conversations.isEmpty) {
-              return const Center(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.chat_bubble_outline,
-                      size: 64,
-                      color: Colors.grey,
-                    ),
-                    SizedBox(height: 16),
-                    Text(
-                      'Aucune conversation',
-                      style: TextStyle(fontSize: 16, color: Colors.grey),
-                    ),
-                    SizedBox(height: 8),
-                    Text(
-                      'Prenez un RDV pour contacter\nun médecin',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                  ],
+            if (state is ConversationLoaded) {
+              if (state.conversations.isEmpty) {
+                return const _EtatVide();
+              }
+              return RefreshIndicator(
+                color: AppColors.primary,
+                onRefresh: () async => context.read<ConversationBloc>().add(
+                  const ConversationsRefraichies(),
+                ),
+                child: ListView.separated(
+                  itemCount: state.conversations.length,
+                  separatorBuilder: (_, __) =>
+                      Divider(height: 1, color: Colors.grey.shade100),
+                  itemBuilder: (context, index) => _ConversationTile(
+                    conversation: state.conversations[index],
+                  ),
                 ),
               );
             }
-            return RefreshIndicator(
-              color: AppColors.primary,
-              onRefresh: () async => context.read<ConversationBloc>().add(
-                const ConversationsRefraichies(),
-              ),
-              child: ListView.separated(
-                itemCount: state.conversations.length,
-                separatorBuilder: (_, __) =>
-                    Divider(height: 1, color: Colors.grey.shade100),
-                itemBuilder: (context, index) {
-                  final conv = state.conversations[index];
-                  return _ConversationTile(conversation: conv);
-                },
-              ),
-            );
-          }
-          return const SizedBox.shrink();
-        },
+
+            // NouvelleConversationChargement
+            if (state is NouvelleConversationChargement) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            return const SizedBox.shrink();
+          },
+        ),
       ),
     );
   }
 }
 
+// ── FAB ───────────────────────────────────────────────────────────
+class _FabNouvelleConversation extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      backgroundColor: AppColors.primary,
+      onPressed: () => _ouvrirChoixMedecin(context),
+      child: const Icon(Icons.add_comment, color: Colors.white),
+    );
+  }
+
+  void _ouvrirChoixMedecin(BuildContext context) {
+    // ← Passer le BLoC existant à la page de choix
+    final convBloc = context.read<ConversationBloc>();
+
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => BlocProvider.value(
+          value: convBloc,
+          child: const ChoixMedecinPage(),
+        ),
+      ),
+    );
+  }
+}
+
+// ── Tile conversation ─────────────────────────────────────────────
 class _ConversationTile extends StatelessWidget {
   final ConversationModel conversation;
   const _ConversationTile({required this.conversation});
@@ -114,18 +126,14 @@ class _ConversationTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (_) => ChatPage(conversation: conversation),
-          ),
-        );
-      },
+      onTap: () => Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => ChatPage(conversation: conversation)),
+      ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: Row(
           children: [
-            // ── Avatar médecin ────────────────────────────
+            // Avatar
             Stack(
               children: [
                 CircleAvatar(
@@ -136,12 +144,7 @@ class _ConversationTile extends StatelessWidget {
                       : null,
                   child: conversation.medecinPhotoUrl == null
                       ? Text(
-                          conversation.medecinNom
-                              .replaceAll('Dr. ', '')
-                              .split(' ')
-                              .map((e) => e.isNotEmpty ? e[0] : '')
-                              .take(2)
-                              .join(),
+                          _initiales(conversation.medecinNom),
                           style: TextStyle(
                             color: AppColors.primary,
                             fontWeight: FontWeight.bold,
@@ -149,7 +152,6 @@ class _ConversationTile extends StatelessWidget {
                         )
                       : null,
                 ),
-                // Point rouge si non lu
                 if (conversation.hasUnread)
                   Positioned(
                     right: 0,
@@ -168,7 +170,7 @@ class _ConversationTile extends StatelessWidget {
 
             const SizedBox(width: 12),
 
-            // ── Infos conversation ─────────────────────────
+            // Infos
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -219,7 +221,6 @@ class _ConversationTile extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      // Badge non lu
                       if (conversation.hasUnread)
                         Container(
                           margin: const EdgeInsets.only(left: 8),
@@ -250,7 +251,6 @@ class _ConversationTile extends StatelessWidget {
                 ],
               ),
             ),
-
             const Icon(Icons.chevron_right, color: Colors.grey, size: 20),
           ],
         ),
@@ -258,12 +258,76 @@ class _ConversationTile extends StatelessWidget {
     );
   }
 
+  String _initiales(String nom) => nom
+      .replaceAll('Dr. ', '')
+      .split(' ')
+      .where((e) => e.isNotEmpty)
+      .take(2)
+      .map((e) => e[0])
+      .join();
+
   String _formatDate(DateTime d) {
     final now = DateTime.now();
     final diff = now.difference(d);
+    if (diff.inMinutes < 1) return 'À l\'instant';
     if (diff.inMinutes < 60) return '${diff.inMinutes}min';
     if (diff.inHours < 24) return '${diff.inHours}h';
     if (diff.inDays == 1) return 'Hier';
     return '${d.day}/${d.month}';
+  }
+}
+
+// ── État vide ─────────────────────────────────────────────────────
+class _EtatVide extends StatelessWidget {
+  const _EtatVide();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.chat_bubble_outline, size: 64, color: Colors.grey),
+          const SizedBox(height: 16),
+          const Text(
+            'Aucune conversation',
+            style: TextStyle(fontSize: 16, color: Colors.grey),
+          ),
+          const SizedBox(height: 8),
+          const Text(
+            'Appuyez sur + pour contacter un médecin',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.grey, fontSize: 13),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// ── État erreur ───────────────────────────────────────────────────
+class _EtatErreur extends StatelessWidget {
+  final String message;
+  const _EtatErreur({required this.message});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.error_outline, size: 48, color: Colors.grey),
+          const SizedBox(height: 12),
+          Text(message, style: const TextStyle(color: Colors.grey)),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () => context.read<ConversationBloc>().add(
+              const ConversationsChargees(),
+            ),
+            child: const Text('Réessayer'),
+          ),
+        ],
+      ),
+    );
   }
 }

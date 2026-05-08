@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sahha_pass/core/constants/app_alerts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
 import 'package:sahha_pass/core/constants/app_colors.dart';
 
@@ -53,9 +54,7 @@ class _RegisterNniViewState extends State<_RegisterNniView> {
           AppRouter.goTo(ctx, AppRoutes.registerConfirm, args: state.patient);
         }
         if (state is AuthErreur) {
-          ScaffoldMessenger.of(ctx).showSnackBar(
-            SnackBar(content: Text(state.message), backgroundColor: Colors.red),
-          );
+          AppAlerts.erreur(context, state.message);
         }
       },
       child: Scaffold(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sahha_pass/core/constants/app_alerts.dart';
 import 'package:sahha_pass/core/constants/app_colors.dart';
 import 'package:sahha_pass/passport_medical/data/models/medecin_rdv/doctor_availabilities.dart';
 import 'package:sahha_pass/passport_medical/data/models/medecin_rdv/doctors.dart';
@@ -22,17 +23,10 @@ class MedecinDetailPage extends StatelessWidget {
       listener: (ctx, state) {
         if (state is RdvSucces) {
           Navigator.of(context).pop(true);
-          ScaffoldMessenger.of(ctx).showSnackBar(
-            SnackBar(
-              content: Text('RDV confirmé avec ${doctor.nomComplet} ✓'),
-              backgroundColor: Colors.green,
-            ),
-          );
+          AppAlerts.succes(context, 'RDV confirmé avec ${doctor.nomComplet}');
         }
         if (state is MedecinError) {
-          ScaffoldMessenger.of(ctx).showSnackBar(
-            SnackBar(content: Text(state.message), backgroundColor: Colors.red),
-          );
+          AppAlerts.erreur(context, state.message);
         }
       },
       child: Scaffold(
@@ -119,12 +113,9 @@ class MedecinDetailPage extends StatelessWidget {
                     disponibiliteSelectionnee: state.disponibiliteSelectionnee,
                     onConfirm: (reason) {
                       if (state.disponibiliteSelectionnee == null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text(
-                              'Veuillez sélectionner une disponibilité.',
-                            ),
-                          ),
+                        AppAlerts.avertissement(
+                          context,
+                          'Veuillez sélectionner une disponibilité.',
                         );
                         return;
                       }

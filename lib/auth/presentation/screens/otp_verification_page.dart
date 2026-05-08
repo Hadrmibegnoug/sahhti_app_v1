@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sahha_pass/core/constants/app_alerts.dart';
 import 'package:sahha_pass/core/constants/app_colors.dart';
 import '../../../core/router/app_router.dart';
 import '../../../core/router/app_routes.dart';
@@ -108,20 +109,13 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
         }
         if (state is OtpRenvoyeChargement) {
           setState(() => _renvoyeOk = true);
-          ScaffoldMessenger.of(ctx).showSnackBar(
-            const SnackBar(
-              content: Text('Code renvoyé !'),
-              backgroundColor: Colors.green,
-            ),
-          );
+          AppAlerts.succes(ctx, 'Code renvoyé avec succès');
         }
         if (state is AuthErreur) {
           // Vider les champs et afficher l'erreur
           for (final c in _controllers) c.clear();
           _focusNodes[0].requestFocus();
-          ScaffoldMessenger.of(ctx).showSnackBar(
-            SnackBar(content: Text(state.message), backgroundColor: Colors.red),
-          );
+          AppAlerts.erreur(context, state.message);
         }
       },
       child: Scaffold(

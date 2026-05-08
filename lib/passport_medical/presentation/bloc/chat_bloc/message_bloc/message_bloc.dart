@@ -58,7 +58,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
       final patientId = patientConnected.patientId;
 
       // 2. Marquer comme lus
-      await _datasource.markAsRead(event.conversationId, patientId);
+      await _datasource.markAsRead(event.conversationId);
 
       emit(MessageLoaded(messages: messages));
 

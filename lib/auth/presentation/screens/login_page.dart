@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sahha_pass/core/constants/app_alerts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' hide AuthState;
 import '../../../core/constants/app_colors.dart';
 import '../../../core/router/app_router.dart';
@@ -52,9 +53,7 @@ class _LoginViewState extends State<_LoginView> {
         if (state is AuthErreur) {
           // Réinitialiser le PIN
           ctx.read<AuthBloc>().add(PinConnexionInitialise());
-          ScaffoldMessenger.of(ctx).showSnackBar(
-            SnackBar(content: Text(state.message), backgroundColor: Colors.red),
-          );
+          AppAlerts.erreur(context, state.message);
         }
       },
       child: Scaffold(

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../bloc/home_bloc/home_bloc.dart';
+import '../../bloc/home_bloc/home_event.dart';
 import '../../bloc/home_bloc/home_state.dart';
 import '../../widgets/card_rdv.dart';
 import '../../widgets/custom_card_pin.dart';
@@ -18,8 +19,15 @@ class HomeContenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
+      body: RefreshIndicator(
+        onRefresh: () async {
+          context.read<HomeBloc>().add(const HomeRafraichi());
+          await context.read<HomeBloc>().stream.firstWhere(
+            (s) => s is HomeLoaded || s is HomeErreur,
+          );
+        },
+        child: ListView(
+          padding: const EdgeInsets.all(8),
           children: [
             Row(
               children: [
@@ -54,7 +62,6 @@ class HomeContenu extends StatelessWidget {
             CardRdv(state: state),
             SizedBox(height: 5),
             Row(
-              //mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Expanded(
                   child: CustomIndicateur(

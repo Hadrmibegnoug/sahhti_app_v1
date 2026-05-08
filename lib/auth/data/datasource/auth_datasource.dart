@@ -76,8 +76,8 @@ class AuthDatasource {
       'gender': patient.gender,
       'date_of_birth': patient.dateOfBirth,
       'blood_type': 'Inconnu',
-      'pin':           pin,       // ← PIN choisi à l'inscription
-      'qr_token':      qrToken,
+      'pin': pin, // ← PIN choisi à l'inscription
+      'qr_token': qrToken,
     });
 
     log('Profil patient créé pour userId: $userId');
@@ -94,6 +94,7 @@ class AuthDatasource {
     await _client.auth.signInWithPassword(phone: phone, password: password);
 
     log('Connecté: ${_client.auth.currentUser?.id}');
+    log('Token JWT: ${_client.auth.currentSession?.accessToken}');
   }
 
   // ── 6. Renvoyer le SMS ────────────────────────────────────────

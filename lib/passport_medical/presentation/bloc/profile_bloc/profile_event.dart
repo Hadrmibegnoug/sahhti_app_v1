@@ -2,7 +2,8 @@ import 'package:equatable/equatable.dart';
 
 abstract class ProfileEvent extends Equatable {
   const ProfileEvent();
-  @override List<Object?> get props => [];
+  @override
+  List<Object?> get props => [];
 }
 
 // Charger le profil au démarrage de la page
@@ -13,8 +14,8 @@ class ProfileDeconnexionDemandee extends ProfileEvent {}
 
 // Modifier les données personnelles
 class ProfileMisAJour extends ProfileEvent {
-  final String  firstName;
-  final String  lastName;
+  final String firstName;
+  final String lastName;
   final String? phone;
   final String? gender;
   final String? dateOfBirth;
@@ -37,9 +38,11 @@ class ProfileMisAJour extends ProfileEvent {
 class ProfilePinChange extends ProfileEvent {
   final String ancienPin;
   final String nouveauPin;
-  const ProfilePinChange({
-    required this.ancienPin,
-    required this.nouveauPin,
-  });
-  @override List<Object> get props => [ancienPin, nouveauPin];
+  const ProfilePinChange({required this.ancienPin, required this.nouveauPin});
+  @override
+  List<Object> get props => [ancienPin, nouveauPin];
+}
+
+class ProfileRafraichi extends ProfileEvent {
+  const ProfileRafraichi();
 }

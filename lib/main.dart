@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/constants/app_theme.dart';
 import 'core/router/app_router.dart';
 import 'core/router/app_routes.dart';
@@ -24,6 +24,13 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       //home: const Tabscreen(),
+      locale: const Locale('fr'), // ← par défaut français
+      supportedLocales: const [Locale('fr'), Locale('ar')],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
       initialRoute: AppRoutes.splash,
       onGenerateRoute: AppRouter.generateRoute,
     );

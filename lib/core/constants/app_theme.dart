@@ -7,6 +7,20 @@ class AppTheme {
 
   static ThemeData get light => ThemeData(
     useMaterial3: true,
+    fontFamily: 'Cairo',
+
+    textTheme: const TextTheme(
+      displayLarge: TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.w700),
+      displayMedium: TextStyle(
+        fontFamily: 'Cairo',
+        fontWeight: FontWeight.w700,
+      ),
+      titleLarge: TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.w600),
+      titleMedium: TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.w600),
+      bodyLarge: TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.w400),
+      bodyMedium: TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.w400),
+      labelLarge: TextStyle(fontFamily: 'Cairo', fontWeight: FontWeight.w600),
+    ),
     colorScheme: const ColorScheme.light(
       primary: AppColors.primary,
       secondary: AppColors.primaryLight,
@@ -26,8 +40,9 @@ class AppTheme {
         statusBarIconBrightness: Brightness.light,
       ),
       titleTextStyle: TextStyle(
-        fontSize: 17,
-        fontWeight: FontWeight.w600,
+        fontFamily: 'Cairo',
+        fontSize: 18,
+        fontWeight: FontWeight.w700,
         color: Colors.white,
       ),
       iconTheme: IconThemeData(color: Colors.white),
@@ -38,8 +53,12 @@ class AppTheme {
       unselectedItemColor: AppColors.textHint,
       type: BottomNavigationBarType.fixed,
       elevation: 8,
-      selectedLabelStyle: TextStyle(fontSize: 10, fontWeight: FontWeight.w600),
-      unselectedLabelStyle: TextStyle(fontSize: 10),
+      selectedLabelStyle: TextStyle(
+        fontFamily: 'Cairo',
+        fontSize: 10,
+        fontWeight: FontWeight.w600,
+      ),
+      unselectedLabelStyle: TextStyle(fontFamily: 'Cairo', fontSize: 10),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -48,7 +67,10 @@ class AppTheme {
         minimumSize: const Size(double.infinity, 52),
         elevation: 0,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-        textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+        textStyle: const TextStyle(
+          fontFamily: 'Cairo',
+          fontWeight: FontWeight.w700,
+        ),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
@@ -57,7 +79,11 @@ class AppTheme {
         minimumSize: const Size(double.infinity, 52),
         side: const BorderSide(color: AppColors.primary, width: 1.5),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-        textStyle: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+        textStyle: const TextStyle(
+          fontFamily: 'Cairo',
+          fontSize: 15,
+          fontWeight: FontWeight.w600,
+        ),
       ),
     ),
     inputDecorationTheme: InputDecorationTheme(
