@@ -1,7 +1,5 @@
 name: sahha_pass
-description: "A new Flutter project."
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
+description: "This App is dedicate to be a bridge between doctor and patient"
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
@@ -69,13 +67,11 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   generate: true
-
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/logo.png
   #   - images/a_dot_ham.jpeg
   fonts:
-  # Police principale — supporte l'arabe et le latin
   - family: Cairo
     fonts:
       - asset: assets/fonts/Cairo/static/Cairo-Regular.ttf
@@ -86,29 +82,3 @@ flutter:
         weight: 700
       - asset: assets/fonts/Cairo/static/Cairo-ExtraBold.ttf
         weight: 800
-
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/to/resolution-aware-images
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/to/asset-from-package
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
-  #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/to/font-from-package
