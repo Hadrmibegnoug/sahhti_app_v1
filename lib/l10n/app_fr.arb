@@ -1,28 +1,161 @@
 {
   "@@locale": "fr",
+
   "appName": "Sahhti",
+  "@appName": { "description": "Nom de l'application" },
+
   "accueil": "Accueil",
   "medecins": "Médecins",
   "messages": "Messages",
   "profil": "Profil",
   "rendezVous": "Rendez-vous",
   "dossierMedical": "Dossier médical",
-  "connexion": "Connexion",
-  "inscription": "Inscription",
-  "codePIN": "Code PIN",
-  "votreTelephone": "Votre téléphone",
-  "confirmerRdv": "Confirmer le rendez-vous",
-  "rdvConfirme": "Rendez-vous confirmé",
-  "erreurConnexion": "Téléphone ou code PIN incorrect",
-  "seDeconnecter": "Se déconnecter",
-  "bonjour": "Bonjour",
-  "groupeSanguin": "Groupe sanguin",
-  "allergies": "Allergies",
   "ordonnances": "Ordonnances",
   "vaccins": "Vaccins",
-  "monQrCode": "Mon QR Code",
+
+  "connexion": "Connexion",
+  "inscription": "Inscription",
+  "seDeconnecter": "Se déconnecter",
+  "annuler": "Annuler",
+  "confirmer": "Confirmer",
+  "retour": "Retour",
+  "reessayer": "Réessayer",
+  "sauvegarder": "Sauvegarder",
+  "fermer": "Fermer",
+  "suivant": "Suivant",
+  "valider": "Valider",
+
+  "votreTelephone": "Votre téléphone",
+  "codePIN": "Code PIN",
+  "votrePIN": "Votre code PIN",
+  "confirmerPIN": "Confirmez votre code PIN",
+  "choisirPIN": "Choisissez votre code PIN",
+  "ancienPIN": "Ancien code PIN",
+  "nouveauPIN": "Nouveau code PIN",
+  "changerPIN": "Changer mon code PIN",
+  "pinDifferents": "Les codes ne correspondent pas. Recommencez.",
+  "pinObligatoire": "4 chiffres — remplace votre mot de passe",
+
+  "votreNNI": "Votre NNI",
+  "saisiNNI": "Saisissez votre Numéro National d'Identité",
+  "nniIntrouvable": "NNI introuvable. Vérifiez votre numéro.",
+  "verifierNNI": "Vérifier mon NNI",
+
+  "verificationSMS": "Vérification SMS",
+  "codeSMSEnvoye": "Un code à 6 chiffres a été envoyé au",
+  "renvoyerCode": "Renvoyer le code",
+  "verifierCode": "Vérifier le code",
+  "codeRenvoye": "Code renvoyé !",
+
+  "etape": "Étape {numero}/3",
+  "@etape": {
+    "placeholders": {
+      "numero": { "type": "int" }
+    }
+  },
+
+  "bonjour": "Bonjour {prenom} 👋",
+  "@bonjour": {
+    "placeholders": {
+      "prenom": { "type": "String" }
+    }
+  },
+
+  "pasEncoreInscrit": "Pas encore inscrit ? S'inscrire",
+  "dejaInscrit": "Déjà inscrit ? Se connecter",
+
+  "monQrCode": "Mon QR Code & PIN",
+  "qrCodeDescription": "Présentez ce QR code et votre PIN à votre médecin pour autoriser l'accès à votre dossier.",
   "masquer": "Masquer",
   "voir": "Voir",
   "copier": "Copier",
-  "copie": "Copié ✓"
+  "copie": "Copié ✓",
+  "nepasPartagerPIN": "Ne partagez votre PIN qu'en consultation",
+
+  "groupeSanguin": "Groupe sanguin",
+  "allergies": "Allergies",
+  "antecedents": "Antécédents",
+  "aucuneAllergie": "Aucune allergie",
+  "donneesPersonnelles": "Données Personnelles",
+  "donneesMedicales": "Données médicales de base",
+  "historiqueAcces": "Historique d'accès",
+  "quiAConsulte": "Qui a consulté mon dossier",
+
+  "specialites": "Spécialités",
+  "suivisIndicateurs": "Suivi des indicateurs",
+  "poidsActuel": "Poids Actuel",
+  "carnetVaccination": "Carnet de vaccination",
+  "complet": "Complet",
+  "rappel": "Rappel",
+  "dose": "{recu}/{total} dose(s)",
+  "@dose": {
+    "placeholders": {
+      "recu":  { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+
+  "chercherMedecin": "Rechercher un médecin...",
+  "tous": "Tous",
+  "aucunMedecinTrouve": "Aucun médecin trouvé",
+  "prendreRDV": "Prendre RDV",
+  "aPropos": "À propos",
+  "disponibilites": "Disponibilités",
+  "aucuneDisponibilite": "Aucune disponibilité enregistrée.",
+  "typeConsultation": "Type de consultation",
+  "presentiel": "Présentiel",
+  "teleconsultation": "Téléconsultation",
+  "dateRendezVous": "Date du rendez-vous",
+  "selectionnerDate": "Sélectionner une date",
+  "motifConsultation": "Motif de consultation",
+  "motifHint": "Décrivez brièvement votre motif...",
+  "confirmerRDV": "Confirmer le rendez-vous",
+  "selectionnerDisponibilite": "Veuillez sélectionner une disponibilité.",
+  "rdvConfirme": "Rendez-vous confirmé avec {nom} ✓",
+  "@rdvConfirme": {
+    "placeholders": {
+      "nom": { "type": "String" }
+    }
+  },
+
+  "aucuneConversation": "Aucune conversation",
+  "contactezMedecin": "Appuyez sur + pour contacter un médecin",
+  "contacterMedecin": "Contacter un médecin",
+  "votreMMessage": "Votre message...",
+  "nouveau": "Nouveau",
+
+  "monProfil": "Mon Profil",
+  "informationsPersonnelles": "INFORMATIONS PERSONNELLES",
+  "preferences": "PRÉFÉRENCES",
+  "securiteDonnees": "SÉCURITÉ & DONNÉES",
+  "langue": "Langue",
+  "langueSubtitle": "Français / العربية",
+  "rappelsRDV": "Rappels RDV",
+  "rappelsRDVSubtitle": "Push + SMS · J-1 et H-2",
+  "rappelsMedicaments": "Rappels médicaments",
+  "rappelsMedicamentsSubtitle": "Traitements en cours",
+  "biometrie": "Biométrie",
+  "biometrieSubtitle": "Face ID / Empreinte digitale",
+  "confirmationDeconnexion": "Voulez-vous vraiment vous déconnecter ?",
+  "version": "Sahhti v1.0.0 · صحتي",
+
+  "erreurConnexion": "Numéro ou code PIN incorrect.",
+  "erreurReseau": "Vérifiez votre connexion.",
+  "erreurGenerale": "Une erreur est survenue. Réessayez.",
+  "connexionFaible": "Connexion lente. Vérifiez votre réseau.",
+  "profilIntrouvable": "Profil patient introuvable.",
+
+  "mru": "{montant} MRU",
+  "@mru": {
+    "placeholders": {
+      "montant": { "type": "int" }
+    }
+  },
+
+  "note": "{valeur} ⭐",
+  "@note": {
+    "placeholders": {
+      "valeur": { "type": "String" }
+    }
+  }
 }

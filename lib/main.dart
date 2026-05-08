@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'core/constants/app_theme.dart';
 import 'core/router/app_router.dart';
 import 'core/router/app_routes.dart';
+import 'l10n/app_localizations.dart';
 //import 'passport_medical/presentation/screens/tabscreen.dart';
 
 Future<void> main() async {
@@ -22,15 +23,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.light,
-      //home: const Tabscreen(),
-      locale: const Locale('fr'), // ← par défaut français
+      locale: const Locale('fr'),
       supportedLocales: const [Locale('fr'), Locale('ar')],
       localizationsDelegates: const [
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      theme: AppTheme.light,
       initialRoute: AppRoutes.splash,
       onGenerateRoute: AppRouter.generateRoute,
     );

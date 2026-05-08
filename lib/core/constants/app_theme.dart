@@ -69,7 +69,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         textStyle: const TextStyle(
           fontFamily: 'Cairo',
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w600,
         ),
       ),
     ),
@@ -81,7 +81,7 @@ class AppTheme {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         textStyle: const TextStyle(
           fontFamily: 'Cairo',
-          fontSize: 15,
+          fontSize: 13,
           fontWeight: FontWeight.w600,
         ),
       ),

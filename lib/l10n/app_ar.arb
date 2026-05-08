@@ -1,28 +1,160 @@
 {
   "@@locale": "ar",
+
   "appName": "صحتي",
+
   "accueil": "الرئيسية",
   "medecins": "الأطباء",
   "messages": "الرسائل",
   "profil": "الملف الشخصي",
   "rendezVous": "المواعيد",
   "dossierMedical": "الملف الطبي",
-  "connexion": "تسجيل الدخول",
-  "inscription": "إنشاء حساب",
-  "codePIN": "رمز PIN",
-  "votreTelephone": "رقم هاتفك",
-  "confirmerRdv": "تأكيد الموعد",
-  "rdvConfirme": "تم تأكيد الموعد",
-  "erreurConnexion": "رقم الهاتف أو رمز PIN غير صحيح",
-  "seDeconnecter": "تسجيل الخروج",
-  "bonjour": "مرحباً",
-  "groupeSanguin": "فصيلة الدم",
-  "allergies": "الحساسية",
   "ordonnances": "الوصفات الطبية",
   "vaccins": "التطعيمات",
-  "monQrCode": "رمز QR الخاص بي",
+
+  "connexion": "تسجيل الدخول",
+  "inscription": "إنشاء حساب",
+  "seDeconnecter": "تسجيل الخروج",
+  "annuler": "إلغاء",
+  "confirmer": "تأكيد",
+  "retour": "رجوع",
+  "reessayer": "إعادة المحاولة",
+  "sauvegarder": "حفظ",
+  "fermer": "إغلاق",
+  "suivant": "التالي",
+  "valider": "تحقق",
+
+  "votreTelephone": "رقم هاتفك",
+  "codePIN": "رمز PIN",
+  "votrePIN": "رمز PIN الخاص بك",
+  "confirmerPIN": "أكد رمز PIN الخاص بك",
+  "choisirPIN": "اختر رمز PIN الخاص بك",
+  "ancienPIN": "رمز PIN القديم",
+  "nouveauPIN": "رمز PIN الجديد",
+  "changerPIN": "تغيير رمز PIN",
+  "pinDifferents": "الرمزان غير متطابقان. أعد المحاولة.",
+  "pinObligatoire": "4 أرقام — يحل محل كلمة المرور",
+
+  "votreNNI": "رقم هويتك الوطنية",
+  "saisiNNI": "أدخل رقم هويتك الوطنية",
+  "nniIntrouvable": "رقم الهوية غير موجود. تحقق من الرقم.",
+  "verifierNNI": "التحقق من رقم هويتي",
+
+  "verificationSMS": "التحقق عبر الرسائل القصيرة",
+  "codeSMSEnvoye": "تم إرسال رمز مكون من 6 أرقام إلى",
+  "renvoyerCode": "إعادة إرسال الرمز",
+  "verifierCode": "التحقق من الرمز",
+  "codeRenvoye": "تم إرسال الرمز !",
+
+  "etape": "الخطوة {numero}/3",
+  "@etape": {
+    "placeholders": {
+      "numero": { "type": "int" }
+    }
+  },
+
+  "bonjour": "مرحباً {prenom} 👋",
+  "@bonjour": {
+    "placeholders": {
+      "prenom": { "type": "String" }
+    }
+  },
+
+  "pasEncoreInscrit": "ليس لديك حساب ؟ سجل الآن",
+  "dejaInscrit": "لديك حساب ؟ تسجيل الدخول",
+
+  "monQrCode": "رمز QR ورمز PIN",
+  "qrCodeDescription": "اعرض رمز QR ورمز PIN للطبيب للسماح له بالوصول إلى ملفك الطبي.",
   "masquer": "إخفاء",
   "voir": "عرض",
   "copier": "نسخ",
-  "copie": "تم النسخ ✓"
+  "copie": "تم النسخ ✓",
+  "nepasPartagerPIN": "شارك رمز PIN فقط أثناء الاستشارة",
+
+  "groupeSanguin": "فصيلة الدم",
+  "allergies": "الحساسية",
+  "antecedents": "السوابق المرضية",
+  "aucuneAllergie": "لا توجد حساسية",
+  "donneesPersonnelles": "البيانات الشخصية",
+  "donneesMedicales": "البيانات الطبية الأساسية",
+  "historiqueAcces": "سجل الوصول",
+  "quiAConsulte": "من اطلع على ملفي الطبي",
+
+  "specialites": "التخصصات",
+  "suivisIndicateurs": "متابعة المؤشرات",
+  "poidsActuel": "الوزن الحالي",
+  "carnetVaccination": "دفتر التطعيمات",
+  "complet": "مكتمل",
+  "rappel": "جرعة منشطة",
+  "dose": "{recu}/{total} جرعة",
+  "@dose": {
+    "placeholders": {
+      "recu":  { "type": "int" },
+      "total": { "type": "int" }
+    }
+  },
+
+  "chercherMedecin": "ابحث عن طبيب...",
+  "tous": "الكل",
+  "aucunMedecinTrouve": "لم يتم العثور على طبيب",
+  "prendreRDV": "حجز موعد",
+  "aPropos": "نبذة",
+  "disponibilites": "أوقات العمل",
+  "aucuneDisponibilite": "لا توجد أوقات متاحة.",
+  "typeConsultation": "نوع الاستشارة",
+  "presentiel": "حضوري",
+  "teleconsultation": "استشارة عن بُعد",
+  "dateRendezVous": "تاريخ الموعد",
+  "selectionnerDate": "اختر تاريخاً",
+  "motifConsultation": "سبب الاستشارة",
+  "motifHint": "اشرح سبب الزيارة باختصار...",
+  "confirmerRDV": "تأكيد الموعد",
+  "selectionnerDisponibilite": "يرجى اختيار وقت متاح.",
+  "rdvConfirme": "تم تأكيد الموعد مع {nom} ✓",
+  "@rdvConfirme": {
+    "placeholders": {
+      "nom": { "type": "String" }
+    }
+  },
+
+  "aucuneConversation": "لا توجد محادثات",
+  "contactezMedecin": "اضغط + للتواصل مع طبيب",
+  "contacterMedecin": "التواصل مع طبيب",
+  "votreMMessage": "رسالتك...",
+  "nouveau": "جديد",
+
+  "monProfil": "ملفي الشخصي",
+  "informationsPersonnelles": "المعلومات الشخصية",
+  "preferences": "التفضيلات",
+  "securiteDonnees": "الأمان والبيانات",
+  "langue": "اللغة",
+  "langueSubtitle": "Français / العربية",
+  "rappelsRDV": "تذكيرات المواعيد",
+  "rappelsRDVSubtitle": "إشعار + رسالة · يوم قبل وساعتين",
+  "rappelsMedicaments": "تذكيرات الأدوية",
+  "rappelsMedicamentsSubtitle": "العلاجات الجارية",
+  "biometrie": "القياسات الحيوية",
+  "biometrieSubtitle": "بصمة الوجه / بصمة الإصبع",
+  "confirmationDeconnexion": "هل تريد تسجيل الخروج؟",
+  "version": "Sahhti v1.0.0 · صحتي",
+
+  "erreurConnexion": "رقم الهاتف أو رمز PIN غير صحيح.",
+  "erreurReseau": "تحقق من اتصالك بالإنترنت.",
+  "erreurGenerale": "حدث خطأ. أعد المحاولة.",
+  "connexionFaible": "الاتصال بطيء. تحقق من شبكتك.",
+  "profilIntrouvable": "الملف الطبي غير موجود.",
+
+  "mru": "{montant} أوقية",
+  "@mru": {
+    "placeholders": {
+      "montant": { "type": "int" }
+    }
+  },
+
+  "note": "{valeur} ⭐",
+  "@note": {
+    "placeholders": {
+      "valeur": { "type": "String" }
+    }
+  }
 }
