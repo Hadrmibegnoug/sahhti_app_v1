@@ -7,6 +7,8 @@ import 'package:sahha_pass/passport_medical/presentation/bloc/rdv_bloc/rdv_event
 import 'package:sahha_pass/passport_medical/presentation/bloc/rdv_bloc/rdv_state.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../l10n/build_context_l10n.dart';
+
 class Rdv extends StatelessWidget {
   const Rdv({super.key});
 
@@ -107,35 +109,35 @@ class Rdv extends StatelessWidget {
 
 class _rdvDeils extends StatelessWidget {
   const _rdvDeils();
-
-  Color _couleurStatut(String statut) {
-    switch (statut) {
-      case 'confirmed':
-        return Colors.green;
-      case 'pending':
-        return Colors.orange;
-      case 'cancelled':
-        return Colors.red;
-      default:
-        return Colors.grey;
-    }
-  }
-
-  String _traduireStatut(String statut) {
-    switch (statut) {
-      case 'confirmed':
-        return 'Confirmé';
-      case 'pending':
-        return 'En attente';
-      case 'cancelled':
-        return 'Annulé';
-      default:
-        return statut;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
+    Color _couleurStatut(String statut) {
+      switch (statut) {
+        case 'confirmed':
+          return Colors.green;
+        case 'pending':
+          return Colors.orange;
+        case 'cancelled':
+          return Colors.red;
+        default:
+          return Colors.grey;
+      }
+    }
+
+    String _traduireStatut(String statut) {
+      switch (statut) {
+        case 'confirmed':
+          return t.confirme;
+        case 'pending':
+          return t.pending;
+        case 'cancelled':
+          return t.cancelled;
+        default:
+          return statut;
+      }
+    }
+
     return Scaffold(
       body: BlocBuilder<RdvBloc, RdvState>(
         builder: (context, state) {
@@ -155,7 +157,7 @@ class _rdvDeils extends StatelessWidget {
                     Icon(Icons.calendar_today, size: 48, color: Colors.grey),
                     SizedBox(height: 12),
                     Text(
-                      'Aucun Rendez Vous !',
+                      t.aucunRdvTrouve,
                       style: TextStyle(color: Colors.grey),
                     ),
                   ],
@@ -239,7 +241,9 @@ class _rdvDeils extends StatelessWidget {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              rdv.appointmentDate.toString(),
+                              rdv.appointmentDate.toLocal().toString().split(
+                                ' ',
+                              )[0],
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey,
@@ -253,7 +257,7 @@ class _rdvDeils extends StatelessWidget {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              '${rdv.startTime}',
+                              '${rdv.startTime.hour.toString().padLeft(2, '0')}:${rdv.startTime.minute.toString().padLeft(2, '0')}',
                               style: const TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey,

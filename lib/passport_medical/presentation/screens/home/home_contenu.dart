@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sahha_pass/passport_medical/presentation/screens/profile/profile.dart';
 
 import '../../../../core/constants/app_colors.dart';
+import '../../../../l10n/build_context_l10n.dart';
 import '../../bloc/home_bloc/home_bloc.dart';
 import '../../bloc/home_bloc/home_event.dart';
 import '../../bloc/home_bloc/home_state.dart';
@@ -18,87 +20,80 @@ class HomeContenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return Scaffold(
-      body: RefreshIndicator(
-        onRefresh: () async {
-          context.read<HomeBloc>().add(const HomeRafraichi());
-          await context.read<HomeBloc>().stream.firstWhere(
-            (s) => s is HomeLoaded || s is HomeErreur,
-          );
-        },
-        child: ListView(
-          padding: const EdgeInsets.all(8),
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: infoSeparer(
-                    context,
-                    "Passport",
-                    PassportMedical(),
-                    Icons.medical_services,
-                  ),
+      body: ListView(
+        padding: const EdgeInsets.all(8),
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: infoSeparer(
+                  context,
+                  t.passport,
+                  PassportMedical(),
+                  Icons.medical_services,
                 ),
-                Expanded(
-                  child: infoSeparer(
-                    context,
-                    "Dossier",
-                    DossierMedical(),
-                    Icons.folder_shared,
-                  ),
+              ),
+              Expanded(
+                child: infoSeparer(
+                  context,
+                  t.dossier,
+                  DossierMedical(),
+                  Icons.folder_shared,
                 ),
-                Expanded(
-                  child: infoSeparer(
-                    context,
-                    "Ordonnances",
-                    Ordonnance(),
-                    Icons.description,
-                  ),
+              ),
+              Expanded(
+                child: infoSeparer(
+                  context,
+                  t.ordonnances,
+                  Ordonnance(),
+                  Icons.description,
                 ),
-              ],
-            ),
-            CustomCardPin(state: state),
-            SizedBox(height: 5),
-            CardRdv(state: state),
-            SizedBox(height: 5),
-            Row(
-              children: [
-                Expanded(
-                  child: CustomIndicateur(
-                    number: state.nbOrdonnances,
-                    title: "Ordonnances",
-                    containerColor: AppColors.border,
-                    textColor: AppColors.primary,
-                  ),
+              ),
+            ],
+          ),
+          CustomCardPin(state: state),
+          SizedBox(height: 5),
+          CardRdv(state: state),
+          SizedBox(height: 5),
+          Row(
+            children: [
+              Expanded(
+                child: CustomIndicateur(
+                  number: state.nbOrdonnances,
+                  title: t.ordonnances,
+                  containerColor: AppColors.border,
+                  textColor: AppColors.primary,
                 ),
-                Expanded(
-                  child: CustomIndicateur(
-                    number: state.nbVaccins,
-                    title: "Vaccins",
-                    containerColor: AppColors.border,
-                    textColor: AppColors.primary,
-                  ),
+              ),
+              Expanded(
+                child: CustomIndicateur(
+                  number: state.nbVaccins,
+                  title: t.vaccins,
+                  containerColor: AppColors.border,
+                  textColor: AppColors.primary,
                 ),
-                Expanded(
-                  child: CustomIndicateur(
-                    number: state.nbConsultations,
-                    title: "Prescriptions",
-                    containerColor: AppColors.border,
-                    textColor: AppColors.primary,
-                  ),
+              ),
+              Expanded(
+                child: CustomIndicateur(
+                  number: state.nbConsultations,
+                  title: t.prescriptions,
+                  containerColor: AppColors.border,
+                  textColor: AppColors.primary,
                 ),
-                Expanded(
-                  child: CustomIndicateur(
-                    number: state.nbAllergies,
-                    title: "Allergies",
-                    containerColor: AppColors.error.withOpacity(0.5),
-                    textColor: AppColors.error,
-                  ),
+              ),
+              Expanded(
+                child: CustomIndicateur(
+                  number: state.nbAllergies,
+                  title: t.allergies,
+                  containerColor: AppColors.error.withOpacity(0.5),
+                  textColor: AppColors.error,
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

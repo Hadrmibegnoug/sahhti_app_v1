@@ -45,16 +45,16 @@ class HomeDatasource {
     );
   }
 
-  Future<List<AppointmentsModel>> getAppointmentByPatientId(
+  Future<List<RdvDetailModel>> getAppointmentByPatientId(
     int patientId,
   ) async {
     final data = await _client
         .from('appointments')
-        .select()
+        .select('*, doctors(first_name, last_name, specialty)')
         .eq('patient_id', patientId);
     log('Résultat des rendez-vous pour le patient $patientId: $data');
     return (data as List)
-        .map((e) => AppointmentsModel.fromJson(e as Map<String, dynamic>))
+        .map((e) => RdvDetailModel.fromJson(e as Map<String, dynamic>))
         .toList();
   }
 

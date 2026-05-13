@@ -15,6 +15,12 @@ import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
 import '../widget/clavier_pin.dart';
 
+import 'package:sahha_pass/l10n/generated/app_localizations.dart';
+
+extension BuildContextL10n on BuildContext {
+  AppLocalizations get l10n => AppLocalizations.of(this);
+}
+
 class RegisterPinPage extends StatelessWidget {
   final RegisterPinArgs args;
   const RegisterPinPage({super.key, required this.args});
@@ -37,6 +43,7 @@ class _RegisterPinView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return BlocListener<AuthBloc, AuthState>(
       listener: (ctx, state) {
         // SMS envoyé → page OTP
@@ -58,7 +65,7 @@ class _RegisterPinView extends StatelessWidget {
             state.pinConfirmation.length == 4) {
           if (!state.correspondent) {
             // Les PIN ne correspondent pas → réinitialiser
-            AppAlerts.erreur(context, 'Les codes ne correspondent pas.');
+            AppAlerts.erreur(context, t.pinDifferents);
             ctx.read<AuthBloc>().add(PinInscriptionInitialise());
             return;
           }
@@ -98,8 +105,8 @@ class _RegisterPinView extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  const Text(
-                    'Étape 3/3',
+                  Text(
+                    t.etape(3),
                     style: TextStyle(color: Colors.white70, fontSize: 13),
                   ),
                   const SizedBox(height: 8),
@@ -107,8 +114,8 @@ class _RegisterPinView extends StatelessWidget {
                   // Titre change selon l'étape
                   Text(
                     pinState.etapeConfirmation
-                        ? 'Confirmez votre code PIN'
-                        : 'Choisissez votre code PIN',
+                        ? t.confirmerPIN
+                        : t.choisirPIN,
                     style: const TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.w700,
@@ -118,8 +125,8 @@ class _RegisterPinView extends StatelessWidget {
                   const SizedBox(height: 8),
                   Text(
                     pinState.etapeConfirmation
-                        ? 'Saisissez à nouveau votre code PIN'
-                        : '4 chiffres — ce code remplace votre mot de passe',
+                        ? t.saisissezUnNouveauVotreCodePIN
+                        : t.chiffresCecodeRemplaceVotreMotDePasse,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white.withOpacity(0.6),

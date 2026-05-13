@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sahha_pass/core/constants/app_alerts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:sahha_pass/core/constants/app_colors.dart';
+import '../../../../l10n/build_context_l10n.dart';
 import '../../../data/datasources/chat_datasource.dart';
 import '../../../data/models/messagerie/conversations.dart';
 import '../../bloc/chat_bloc/conversaton_bloc/conversation_bloc.dart';
@@ -125,6 +126,7 @@ class _ConversationTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return InkWell(
       onTap: () => Navigator.of(context).push(
         MaterialPageRoute(builder: (_) => ChatPage(conversation: conversation)),
@@ -207,7 +209,7 @@ class _ConversationTile extends StatelessWidget {
                       Expanded(
                         child: Text(
                           conversation.dernierMessage ??
-                              'Commencer la conversation',
+                              t.commencerLaConversation,
                           style: TextStyle(
                             fontSize: 12,
                             color: conversation.hasUnread
@@ -232,8 +234,8 @@ class _ConversationTile extends StatelessWidget {
                             color: AppColors.primary,
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: const Text(
-                            'Nouveau',
+                          child: Text(
+                            t.nouveau,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 9,
@@ -283,19 +285,20 @@ class _EtatVide extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           const Icon(Icons.chat_bubble_outline, size: 64, color: Colors.grey),
           const SizedBox(height: 16),
-          const Text(
-            'Aucune conversation',
+          Text(
+            t.aucuneConversation,
             style: TextStyle(fontSize: 16, color: Colors.grey),
           ),
           const SizedBox(height: 8),
-          const Text(
-            'Appuyez sur + pour contacter un médecin',
+          Text(
+            t.contactezMedecin,
             textAlign: TextAlign.center,
             style: TextStyle(color: Colors.grey, fontSize: 13),
           ),
@@ -312,6 +315,7 @@ class _EtatErreur extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -324,7 +328,7 @@ class _EtatErreur extends StatelessWidget {
             onPressed: () => context.read<ConversationBloc>().add(
               const ConversationsChargees(),
             ),
-            child: const Text('Réessayer'),
+            child: Text(t.reessayer),
           ),
         ],
       ),

@@ -10,6 +10,11 @@ import '../../data/datasource/auth_datasource.dart';
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
+import 'package:sahha_pass/l10n/generated/app_localizations.dart';
+
+extension BuildContextL10n on BuildContext {
+  AppLocalizations get l10n => AppLocalizations.of(this);
+}
 
 class RegisterNniPage extends StatelessWidget {
   const RegisterNniPage({super.key});
@@ -47,6 +52,7 @@ class _RegisterNniViewState extends State<_RegisterNniView> {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return BlocListener<AuthBloc, AuthState>(
       listener: (ctx, state) {
         if (state is NniTrouve) {
@@ -60,8 +66,8 @@ class _RegisterNniViewState extends State<_RegisterNniView> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: AppColors.primary,
-          title: const Text(
-            'Inscription',
+          title: Text(
+            t.inscription,
             style: TextStyle(color: Colors.white),
           ),
           leading: IconButton(
@@ -77,22 +83,21 @@ class _RegisterNniViewState extends State<_RegisterNniView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                const Text(
-                  'Étape 1/3',
+                Text(
+                  t.dose(1, 3),
                   style: TextStyle(
                     color: AppColors.primary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  'Votre NNI',
+                Text(
+                  t.votreNNI,
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: 8),
-                const Text(
-                  'Saisissez votre Numéro National d\'Identité '
-                  'pour récupérer vos informations.',
+                Text(
+                  t.saisirVotreNni,
                   style: TextStyle(color: Colors.grey, height: 1.5),
                 ),
                 const SizedBox(height: 32),
@@ -101,14 +106,14 @@ class _RegisterNniViewState extends State<_RegisterNniView> {
                   controller: _nniCtrl,
                   keyboardType: TextInputType.number,
                   maxLength: 10,
-                  decoration: const InputDecoration(
-                    labelText: 'Numéro NNI',
+                  decoration: InputDecoration(
+                    labelText: t.nni,
                     prefixIcon: Icon(Icons.badge_outlined),
                     hintText: 'Ex: 1234567890',
                   ),
                   validator: (v) {
                     if (v == null || v.trim().length < 5) {
-                      return 'NNI invalide';
+                      return t.nniInvalide;
                     }
                     return null;
                   },
@@ -133,8 +138,8 @@ class _RegisterNniViewState extends State<_RegisterNniView> {
                               color: Colors.white,
                               strokeWidth: 2,
                             )
-                          : const Text(
-                              'Vérifier mon NNI',
+                          : Text(
+                              t.verifierNNI,
                               style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.white,

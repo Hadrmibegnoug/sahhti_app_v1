@@ -10,6 +10,7 @@ import '../../../data/models/messagerie/messages.dart';
 import '../../bloc/chat_bloc/message_bloc/message_bloc.dart';
 import '../../bloc/chat_bloc/message_bloc/message_event.dart';
 import '../../bloc/chat_bloc/message_bloc/message_state.dart';
+import 'package:sahha_pass/l10n/build_context_l10n.dart';
 
 class ChatPage extends StatelessWidget {
   final ConversationModel conversation;
@@ -32,6 +33,7 @@ class _ChatView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return Scaffold(
       appBar: _ChatAppBar(conversation: conversation),
       body: Column(
@@ -48,9 +50,9 @@ class _ChatView extends StatelessWidget {
                 }
                 if (state is MessageLoaded) {
                   if (state.messages.isEmpty) {
-                    return const Center(
+                    return Center(
                       child: Text(
-                        'Aucun message.\nEnvoyez le premier !',
+                        t.aucunMessageEnvPremier,
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Colors.grey),
                       ),
@@ -205,13 +207,14 @@ class _DateSeparator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     final now = DateTime.now();
     final today = DateTime(now.year, now.month, now.day);
     final d = DateTime(date.year, date.month, date.day);
     final label = d == today
-        ? "Aujourd'hui"
+        ? t.aujourdhui
         : d == today.subtract(const Duration(days: 1))
-        ? 'Hier'
+        ? t.hier
         : '${date.day}/${date.month}/${date.year}';
 
     return Padding(
@@ -363,6 +366,7 @@ class _InputBarState extends State<_InputBar> {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
       decoration: BoxDecoration(
@@ -393,8 +397,8 @@ class _InputBarState extends State<_InputBar> {
                   maxLines: 4,
                   minLines: 1,
                   textCapitalization: TextCapitalization.sentences,
-                  decoration: const InputDecoration(
-                    hintText: 'Votre message...',
+                  decoration: InputDecoration(
+                    hintText: t.votreMMessage,
                     border: InputBorder.none,
                     isDense: true,
                     hintStyle: TextStyle(color: Colors.grey),

@@ -25,7 +25,15 @@ class HomePage extends StatelessWidget {
             return Center(child: Text(state.message));
           }
           if (state is HomeLoaded) {
-            return HomeContenu(state: state);
+            return RefreshIndicator(
+              onRefresh: () async {
+                context.read<HomeBloc>().add(HomeDataLoaded());
+                await context.read<HomeBloc>().stream.firstWhere(
+                  (s) => s is HomeLoaded || s is HomeErreur,
+                );
+              },
+              child: HomeContenu(state: state),
+            );
           }
           return SizedBox.shrink();
         },

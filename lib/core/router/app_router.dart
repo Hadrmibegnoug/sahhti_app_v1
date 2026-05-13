@@ -15,13 +15,17 @@ import '../../auth/presentation/screens/register_confirm_page.dart';
 import '../../auth/presentation/screens/register_nni_page.dart';
 import '../../auth/presentation/screens/register_pin_page.dart';
 import '../../auth/presentation/screens/splash_page.dart';
+import '../../passport_medical/presentation/screens/profile/profile.dart';
 import '../../passport_medical/presentation/screens/tabscreen.dart';
+import '../services/locale_service.dart';
 import 'app_routes.dart';
 
 class AppRouter {
+  static LocaleService? localeService;
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // ── Guard : protéger toutes les routes sauf auth ────────────
     final session = Supabase.instance.client.auth.currentSession;
+    
     final routesPubliques = [
       AppRoutes.splash,
       AppRoutes.login,
@@ -34,7 +38,7 @@ class AppRouter {
     // Si l'utilisateur n'est pas connecté et tente d'accéder
     // à une route protégée → rediriger vers login
     if (session == null && !routesPubliques.contains(settings.name)) {
-      return _route(const LoginPage());
+      return _route(LoginPage(localeService: localeService!));
     }
 
     // Si l'utilisateur est connecté et tente d'aller sur login
@@ -48,7 +52,7 @@ class AppRouter {
         return _route(const SplashPage());
 
       case AppRoutes.login:
-        return _route(const LoginPage());
+        return _route(LoginPage(localeService: localeService!));
 
       case AppRoutes.registerNni:
         return _route(const RegisterNniPage());
@@ -82,6 +86,11 @@ class AppRouter {
       // ── App principale (protégée) ─────────────────────────────
       case AppRoutes.home:
         return _route(const Tabscreen()); // ← Tabscreen ici
+      
+      case AppRoutes.profil:
+        return _route(ProfilePage(
+          localeService: localeService!,
+        ));
 
       default:
         return _route(const SplashPage());

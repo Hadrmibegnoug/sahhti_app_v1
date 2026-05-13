@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/constants/app_colors.dart';
+import '../../../l10n/build_context_l10n.dart';
 
 class CustomCardPatient extends StatelessWidget {
   final String nomComplet;
@@ -15,6 +16,7 @@ class CustomCardPatient extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return Card(
       //color: AppColors.primary,
       margin: EdgeInsets.symmetric(
@@ -41,7 +43,7 @@ class CustomCardPatient extends StatelessWidget {
               children: [
                 Icon(Icons.health_and_safety, color: Colors.white, size: 30),
                 Text(
-                  "Passport Medical",
+                  t.passport,
                   style: TextStyle(color: Colors.white, fontSize: 10),
                 ),
               ],
@@ -60,7 +62,7 @@ class CustomCardPatient extends StatelessWidget {
                 ),
                 SizedBox(height: 5),
                 Text(
-                  "NNI: $NNI",
+                  "${t.nni}: $NNI",
                   style: TextStyle(color: Colors.white, fontSize: 10),
                 ),
               ],
@@ -79,7 +81,7 @@ class CustomCardPatient extends StatelessWidget {
                     color: AppColors.border,
                     borderRadius: BorderRadius.circular(15),
                   ),
-                  child: Text("Groupe: $groupeSanguin"),
+                  child: Text("${t.groupeSanguin}: $groupeSanguin"),
                 ),
                 Spacer(),
                 Container(

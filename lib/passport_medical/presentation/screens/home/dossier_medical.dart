@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sahha_pass/core/constants/app_colors.dart';
+import 'package:sahha_pass/l10n/build_context_l10n.dart';
 import 'package:sahha_pass/passport_medical/data/models/data_medical/patient_vaccinations.dart';
 import 'package:sahha_pass/passport_medical/data/models/data_medical/patient_vitals.dart';
 import 'package:sahha_pass/passport_medical/data/models/data_medical/specialit_stat_model.dart';
@@ -14,6 +15,7 @@ class DossierMedical extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return Scaffold(
       appBar: AppBar(
         title: Text("صحتي Passeport"),
@@ -50,7 +52,7 @@ class DossierMedical extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "DOSSIER MÉDICAL",
+                        t.dossierMedical,
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           color: AppColors.primary,
@@ -77,7 +79,7 @@ class DossierMedical extends StatelessWidget {
                                 Icons.health_and_safety,
                                 color: AppColors.primary,
                               ),
-                              Text("SPÉCIALITÉS"),
+                              Text(t.specialites),
                             ],
                           ),
                           SizedBox(height: 15),
@@ -95,41 +97,7 @@ class DossierMedical extends StatelessWidget {
                                 ),
                               ),
                             );
-                          }),
-                          // customCardSpecialte(
-                          //   "Général",
-                          //   "35",
-                          //   Icons.local_hospital,
-                          //   Colors.blue[200]!,
-                          // ),
-                          // Divider(color: AppColors.cardShadow, height: 20),
-                          // customCardSpecialte(
-                          //   "Cardiologie",
-                          //   "1",
-                          //   Icons.favorite,
-                          //   AppColors.error,
-                          // ),
-                          // Divider(color: AppColors.cardShadow, height: 20),
-                          // customCardSpecialte(
-                          //   "Dermatologie",
-                          //   "2",
-                          //   Icons.face,
-                          //   Colors.orange[200]!,
-                          // ),
-                          // Divider(color: AppColors.cardShadow, height: 20),
-                          // customCardSpecialte(
-                          //   "Néprologie",
-                          //   "3",
-                          //   Icons.local_hospital,
-                          //   Colors.green[200]!,
-                          // ),
-                          // Divider(color: AppColors.cardShadow, height: 20),
-                          // customCardSpecialte(
-                          //   "Ophtalmologie",
-                          //   "4",
-                          //   Icons.visibility,
-                          //   Colors.purple[200]!,
-                          // ),
+                          }, context),
                         ],
                       ),
                     ),
@@ -151,41 +119,43 @@ class DossierMedical extends StatelessWidget {
   Widget customCardSpecialte(
     final List<SpecialitStatModel> stats,
     final void Function(String) onSelectedSpecialite,
+    BuildContext context,
   ) {
-    IconData _icone(String spec) {
-      switch (spec.toLowerCase()) {
-        case 'cardiologue':
+    final t = context.l10n;
+    IconData icone(String spec) {
+      final s = spec.toLowerCase();
+      switch (s) {
+        case "cardiologue":
           return Icons.favorite;
-        case 'pédiatre':
+        case "pediatre":
           return Icons.child_care;
-        case 'ophtalmologue':
+        case "ophtalmologue":
           return Icons.visibility;
-        case 'néprologue':
+        case "neprologue":
           return Icons.water_drop;
-        default:
-          return Icons.local_hospital;
       }
+      return Icons.local_hospital;
     }
 
-    Color _couleur(String spec) {
-      switch (spec.toLowerCase()) {
-        case 'cardiologue':
+    Color couleur(String spec) {
+      final s = spec.toLowerCase();
+      switch (s) {
+        case "cardiologue":
           return Colors.red;
-        case 'pédiatre':
+        case "pediatre":
           return Colors.blue;
-        case 'ophtalmologue':
+        case "ophtalmologue":
           return Colors.purple;
-        case 'néprologue':
+        case "neprologue":
           return Colors.green;
-        default:
-          return AppColors.primary;
       }
+      return AppColors.primary;
     }
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: stats.isEmpty
-          ? Text("Aucune Consultation")
+          ? Text(t.aucuneConsultation)
           : Column(
               children: stats.asMap().entries.map((entry) {
                 final i = entry.key;
@@ -203,12 +173,21 @@ class DossierMedical extends StatelessWidget {
                               borderRadius: BorderRadius.circular(15),
                             ),
                             child: Icon(
-                              _icone(stat.specialite),
-                              color: _couleur(stat.specialite),
+                              icone(stat.specialite),
+                              color: couleur(stat.specialite),
                             ),
                           ),
                           SizedBox(width: 5),
-                          Text(stat.specialite),
+                          Text(switch (stat.specialite.toLowerCase()) {
+                            "cardiologue" => t.cardiologue,
+                            "pédiatre" => t.pediatre,
+                            "ophtalmologue" => t.ophtalmologue,
+                            "neprologue" => t.neprologue,
+                            "médecin généraliste" => t.medGeneraliste,
+                            "dermatologue" => t.dermatologue,
+                            "gynécologue" => t.gynecologue,
+                            _ => stat.specialite,
+                          }),
                           Spacer(),
                           CircleAvatar(
                             backgroundColor: AppColors.primary.withOpacity(0.4),
@@ -245,6 +224,7 @@ class IndicatorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
@@ -264,11 +244,11 @@ class IndicatorCard extends StatelessWidget {
         children: [
           /// TITLE
           Row(
-            children: const [
+            children: [
               Icon(Icons.bar_chart, size: 18, color: Colors.yellow),
               SizedBox(width: 8),
               Text(
-                "SUIVI DES INDICATEURS",
+                t.suivisIndicateurs,
                 style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.bold,
@@ -290,8 +270,8 @@ class IndicatorCard extends StatelessWidget {
             ),
             child: Column(
               children: [
-                const Text(
-                  "Poids Actuel",
+                Text(
+                  t.poidsActuel,
                   style: TextStyle(fontSize: 12, color: Colors.grey),
                 ),
 
@@ -387,62 +367,18 @@ class LineChartPainter extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
-// class VaccinationCard extends StatelessWidget {
-//   const VaccinationCard({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       width: double.infinity,
-//       padding: const EdgeInsets.all(16),
-//       decoration: BoxDecoration(
-//         color: Colors.white,
-//         borderRadius: BorderRadius.circular(16),
-//         boxShadow: [
-//           BoxShadow(
-//             color: Colors.black.withOpacity(0.05),
-//             blurRadius: 10,
-//             offset: const Offset(0, 4),
-//           ),
-//         ],
-//       ),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: const [
-//           Header(),
-//           SizedBox(height: 16),
-//           VaccineItem(
-//             title: "Fièvre Jaune",
-//             date: "1/1 - 2019",
-//             progress: 1.0,
-//             status: "Complet",
-//             isComplete: true,
-//           ),
-//           SizedBox(height: 12),
-//           VaccineItem(
-//             title: "Tétanos",
-//             date: "1/3 - 2014",
-//             progress: 0.5,
-//             status: "Rappel",
-//             isComplete: false,
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-
 class Header extends StatelessWidget {
   const Header({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return Row(
-      children: const [
+      children: [
         Icon(Icons.vaccines, size: 18, color: Colors.grey),
         SizedBox(width: 8),
         Text(
-          "CARNET DE VACCINATION",
+          t.carnetVaccination,
           style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.bold,
@@ -519,13 +455,14 @@ class _SuiviIndicateurs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     if (state.vitals.isEmpty) {
       return _SectionCard(
         icon: Icons.bar_chart,
         iconColor: Colors.amber,
-        title: 'SUIVI DES INDICATEURS',
-        child: const Text(
-          'Aucun indicateur enregistré',
+        title: t.suivisIndicateurs,
+        child: Text(
+          t.aucunIndicateurEnregistre,
           style: TextStyle(color: Colors.grey),
         ),
       );
@@ -534,7 +471,7 @@ class _SuiviIndicateurs extends StatelessWidget {
     return _SectionCard(
       icon: Icons.bar_chart,
       iconColor: Colors.amber,
-      title: 'SUIVI DES INDICATEURS',
+      title: t.suivisIndicateurs,
       child: Column(
         children: state.typesDisponibles
             .map(
@@ -555,52 +492,53 @@ class _IndicateurCard extends StatelessWidget {
   const _IndicateurCard({required this.type, required this.vitals});
 
   // Config par type de vital
-  static const _config = {
-    'heart_rate': (
-      label: 'Fréquence cardiaque',
-      icon: Icons.favorite,
-      color: Color(0xFFE53935),
-      unite: 'bpm',
-      min: 60.0,
-      max: 100.0,
-    ),
-    'blood_pressure': (
-      label: 'Tension artérielle',
-      icon: Icons.show_chart,
-      color: Color(0xFF1565C0),
-      unite: 'mmHg',
-      min: 90.0,
-      max: 140.0,
-    ),
-    'temperature': (
-      label: 'Température',
-      icon: Icons.thermostat,
-      color: Color(0xFFE65100),
-      unite: '°C',
-      min: 36.0,
-      max: 38.0,
-    ),
-    'weight': (
-      label: 'Poids',
-      icon: Icons.monitor_weight,
-      color: Color(0xFF2E7D32),
-      unite: 'kg',
-      min: 0.0,
-      max: 150.0,
-    ),
-    'oxygen_saturation': (
-      label: 'Saturation O₂',
-      icon: Icons.air,
-      color: Color(0xFF00838F),
-      unite: '%',
-      min: 95.0,
-      max: 100.0,
-    ),
-  };
 
   @override
   Widget build(BuildContext context) {
-    final cfg = _config[type];
+    final t = context.l10n;
+    final config = {
+      'heart_rate': (
+        label: t.heartRate,
+        icon: Icons.favorite,
+        color: Color(0xFFE53935),
+        unite: 'bpm',
+        min: 60.0,
+        max: 100.0,
+      ),
+      'blood_pressure': (
+        label: t.bloodPressure,
+        icon: Icons.show_chart,
+        color: Color(0xFF1565C0),
+        unite: 'mmHg',
+        min: 90.0,
+        max: 140.0,
+      ),
+      'temperature': (
+        label: t.temperature,
+        icon: Icons.thermostat,
+        color: Color(0xFFE65100),
+        unite: '°C',
+        min: 36.0,
+        max: 38.0,
+      ),
+      'weight': (
+        label: t.weight,
+        icon: Icons.monitor_weight,
+        color: Color(0xFF2E7D32),
+        unite: 'kg',
+        min: 0.0,
+        max: 150.0,
+      ),
+      'oxygen_saturation': (
+        label: t.oxygenSaturation,
+        icon: Icons.air,
+        color: Color(0xFF00838F),
+        unite: '%',
+        min: 95.0,
+        max: 100.0,
+      ),
+    };
+    final cfg = config[type];
     final label = cfg?.label ?? type;
     final icon = cfg?.icon ?? Icons.monitor_heart;
     final color = cfg?.color ?? AppColors.primary;
@@ -812,15 +750,13 @@ class _CarnetVaccination extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return _SectionCard(
       icon: Icons.vaccines,
       iconColor: Colors.grey,
-      title: 'CARNET DE VACCINATION',
+      title: t.carnetVaccination,
       child: vaccinations.isEmpty
-          ? const Text(
-              'Aucun vaccin enregistré',
-              style: TextStyle(color: Colors.grey),
-            )
+          ? Text(t.aucunVaccinEnreg, style: TextStyle(color: Colors.grey))
           : Column(
               children: vaccinations
                   .map((v) => _VaccineItem(vaccin: v))
@@ -920,110 +856,3 @@ class _VaccineItem extends StatelessWidget {
     );
   }
 }
-
-// class VaccineItem extends StatelessWidget {
-//   final String title;
-//   final String date;
-//   final double progress;
-//   final String status;
-//   final bool isComplete;
-
-//   const VaccineItem({
-//     super.key,
-//     required this.title,
-//     required this.date,
-//     required this.progress,
-//     required this.status,
-//     required this.isComplete,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Row(
-//       children: [
-//         /// ICON
-//         Container(
-//           width: 36,
-//           height: 36,
-//           decoration: BoxDecoration(
-//             color: isComplete
-//                 ? Colors.green.withOpacity(0.1)
-//                 : Colors.orange.withOpacity(0.1),
-//             shape: BoxShape.circle,
-//           ),
-//           child: Icon(
-//             isComplete ? Icons.check : Icons.warning,
-//             color: isComplete ? Colors.green : Colors.orange,
-//           ),
-//         ),
-
-//         const SizedBox(width: 12),
-
-//         /// CONTENT
-//         Expanded(
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               /// TITLE + STATUS
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                 children: [
-//                   Text(
-//                     title,
-//                     style: const TextStyle(
-//                       fontWeight: FontWeight.w600,
-//                       fontSize: 14,
-//                     ),
-//                   ),
-//                   Container(
-//                     padding: const EdgeInsets.symmetric(
-//                       horizontal: 10,
-//                       vertical: 4,
-//                     ),
-//                     decoration: BoxDecoration(
-//                       color: isComplete
-//                           ? Colors.green.withOpacity(0.15)
-//                           : Colors.orange.withOpacity(0.15),
-//                       borderRadius: BorderRadius.circular(12),
-//                     ),
-//                     child: Text(
-//                       status,
-//                       style: TextStyle(
-//                         fontSize: 10,
-//                         fontWeight: FontWeight.w600,
-//                         color: isComplete ? Colors.green : Colors.orange,
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-
-//               const SizedBox(height: 4),
-
-//               /// DAaTE
-//               Text(
-//                 date,
-//                 style: const TextStyle(fontSize: 11, color: Colors.grey),
-//               ),
-
-//               const SizedBox(height: 8),
-
-//               /// PROGRESS BAR
-//               ClipRRect(
-//                 borderRadius: BorderRadius.circular(4),
-//                 child: LinearProgressIndicator(
-//                   value: progress,
-//                   minHeight: 4,
-//                   backgroundColor: Colors.grey.shade300,
-//                   valueColor: AlwaysStoppedAnimation<Color>(
-//                     isComplete ? Colors.green : Colors.orange,
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }

@@ -4,14 +4,17 @@ import 'package:sahha_pass/core/constants/app_colors.dart';
 import 'package:sahha_pass/passport_medical/presentation/bloc/home_bloc/home_bloc.dart';
 import 'package:sahha_pass/passport_medical/presentation/bloc/home_bloc/home_state.dart';
 
+import '../../../../l10n/build_context_l10n.dart';
+
 class Ordonnance extends StatelessWidget {
   const Ordonnance({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Ordonnance"),
+        title: Text(t.ordonnances),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
@@ -25,214 +28,201 @@ class Ordonnance extends StatelessWidget {
             return Center(child: CircularProgressIndicator());
           }
           final prescriptions = state.prescriptions;
-          return SingleChildScrollView(
-            physics: BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                customContainer(
-                  context,
-                  MediaQuery.of(context).size.height * 0.3,
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.health_and_safety_outlined,
-                            size: 30,
-                            color: Colors.red,
-                          ),
-                          Text("ORDONNANCES ACTIVITES"),
-                        ],
-                      ),
+          return Column(
+            children: [
+              customContainer(
+                context,
+                Column(
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.health_and_safety_outlined,
+                          size: 30,
+                          color: Colors.red,
+                        ),
+                        Text(t.ordonnances),
+                      ],
+                    ),
 
-                      SizedBox(height: 10),
-                      ...prescriptions.map((prescription) {
-                        return Expanded(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                medicament(
-                                  prescription.status == 'completed'
-                                      ? AppColors.primaryLight
-                                      : AppColors.language,
-                                  prescription.medicationName,
-                                  '${prescription.dosage}, ${prescription.frequency}',
-                                  prescription.status,
-                                ),
-                                Divider(
-                                  color: AppColors.cardShadow,
-                                  thickness: 2,
-                                  height: 10,
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 10),
-                customContainer(
-                  context,
-                  MediaQuery.of(context).size.height * 0.5,
-                  Column(
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.health_and_safety_sharp,
-                            size: 30,
-                            color: Colors.red,
-                          ),
-                          Text("EXAMENS & IMAGERIES"),
-                          Spacer(),
-                          TextButton.icon(
-                            onPressed: () {},
-                            label: Text("Ajouter"),
-                            icon: Icon(Icons.add, size: 15),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Expanded(
+                    SizedBox(height: 10),
+                    ...prescriptions.map((prescription) {
+                      return Expanded(
                         child: SingleChildScrollView(
-                          child: GridView(
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
-                                  crossAxisSpacing: 10,
-                                  mainAxisSpacing: 10,
-                                ),
+                          child: Column(
                             children: [
-                              Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: AppColors.primary.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.bloodtype,
-                                      size: 30,
-                                      color: AppColors.primary,
-                                    ),
-                                    SizedBox(height: 5),
-                                    Text(
-                                      "Bilan sanguin",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: AppColors.primary,
-                                        fontWeight: FontWeight.w900,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                              medicament(
+                                prescription.status == 'completed'
+                                    ? AppColors.primaryLight
+                                    : AppColors.language,
+                                prescription.medicationName,
+                                '${prescription.dosage}, ${prescription.frequency}',
+                                prescription.status,
                               ),
-                              Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: AppColors.primary.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.image,
-                                      size: 30,
-                                      color: AppColors.primary,
-                                    ),
-                                    SizedBox(height: 5),
-                                    Text(
-                                      "Echographie abdominale",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: AppColors.primary,
-                                        fontWeight: FontWeight.w900,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: AppColors.primary.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.image,
-                                      size: 30,
-                                      color: AppColors.primary,
-                                    ),
-                                    SizedBox(height: 5),
-                                    Text(
-                                      "Radiographie thoracique",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: AppColors.primary,
-                                        fontWeight: FontWeight.w900,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(10),
-                                decoration: BoxDecoration(
-                                  color: AppColors.primary.withOpacity(0.2),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.image,
-                                      size: 30,
-                                      color: AppColors.primary,
-                                    ),
-                                    SizedBox(height: 5),
-                                    Text(
-                                      "IRM cérébrale",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: AppColors.primary,
-                                        fontWeight: FontWeight.w900,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
+                              Divider(
+                                color: AppColors.cardShadow,
+                                thickness: 2,
+                                height: 10,
                               ),
                             ],
                           ),
                         ),
+                      );
+                    }),
+                  ],
+                ),
+              ),
+              SizedBox(height: 10),
+              customContainer(
+                context,
+                Expanded(
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.description_outlined,
+                            size: 30,
+                            color: AppColors.primary,
+                          ),
+                          SizedBox(width: 5),
+                          Text(t.examensImageries),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      GridView(
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                        ),
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.bloodtype,
+                                  size: 30,
+                                  color: AppColors.primary,
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  t.bilanSanguin,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.image,
+                                  size: 30,
+                                  color: AppColors.primary,
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  t.echographieAbdominale,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.image,
+                                  size: 30,
+                                  color: AppColors.primary,
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  t.radiographieThorax,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.image,
+                                  size: 30,
+                                  color: AppColors.primary,
+                                ),
+                                SizedBox(height: 5),
+                                Text(
+                                  t.irmCelebrale,
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: AppColors.primary,
+                                    fontWeight: FontWeight.w900,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           );
         },
       ),
     );
   }
 
-  Container customContainer(BuildContext context, double height, Widget child) {
+  Container customContainer(BuildContext context, Widget child) {
     return Container(
       width: double.infinity,
-      height: height,
+      //height: height,
       margin: EdgeInsets.symmetric(horizontal: 5, vertical: 10),
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
       decoration: BoxDecoration(

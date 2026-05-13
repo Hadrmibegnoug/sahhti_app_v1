@@ -60,6 +60,7 @@ class MedecinBloc extends Bloc<MedecinEvent, MedecinState> {
         : s.tousLesdoctors
               .where((d) => d.specialty == event.specialite)
               .toList();
+    log('filtre spécialité: ${event.specialite}, trouvé: ${filtres.length}');
     emit(
       s.copyWith(
         medecinsFiltres: filtres,

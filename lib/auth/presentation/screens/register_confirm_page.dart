@@ -1,5 +1,3 @@
-// presentation/screens/auth/register_confirm_page.dart
-
 import 'package:flutter/material.dart';
 import 'package:sahha_pass/core/constants/app_colors.dart';
 
@@ -7,6 +5,11 @@ import '../../../core/router/app_router.dart';
 import '../../../core/router/app_routes.dart';
 import '../../data/models/register_pin_args.dart';
 import '../../data/models/registry_patient_model.dart';
+import 'package:sahha_pass/l10n/generated/app_localizations.dart';
+
+extension BuildContextL10n on BuildContext {
+  AppLocalizations get l10n => AppLocalizations.of(this);
+}
 
 class RegisterConfirmPage extends StatefulWidget {
   final RegistryPatientModel patient;
@@ -18,7 +21,7 @@ class RegisterConfirmPage extends StatefulWidget {
 
 class _RegisterConfirmPageState extends State<RegisterConfirmPage> {
   final _phoneCtrl = TextEditingController();
-  final _formKey   = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -32,7 +35,7 @@ class _RegisterConfirmPageState extends State<RegisterConfirmPage> {
       context,
       AppRoutes.registerPin,
       args: RegisterPinArgs(
-        patient:   widget.patient,
+        patient: widget.patient,
         telephone: _phoneCtrl.text.trim(),
       ),
     );
@@ -40,11 +43,14 @@ class _RegisterConfirmPageState extends State<RegisterConfirmPage> {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AppColors.primary,
-        title: const Text('Confirmer vos informations',
-            style: TextStyle(color: Colors.white)),
+        title: Text(
+          t.confirmezVosInformations,
+          style: TextStyle(color: Colors.white),
+        ),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.of(context).pop(),
@@ -57,17 +63,21 @@ class _RegisterConfirmPageState extends State<RegisterConfirmPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Étape 2/3',
-                  style: TextStyle(
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.w600)),
+              Text(
+                t.dose(2, 3),
+                style: TextStyle(
+                  color: AppColors.primary,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
               const SizedBox(height: 8),
-              const Text('Vos informations',
-                  style: TextStyle(
-                    fontSize: 24, fontWeight: FontWeight.w700)),
+              Text(
+                t.vosInfos,
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700),
+              ),
               const SizedBox(height: 8),
-              const Text(
-                'Vérifiez que ces informations vous correspondent.',
+              Text(
+                t.verifiezInformationsCorrespondent,
                 style: TextStyle(color: Colors.grey),
               ),
               const SizedBox(height: 24),
@@ -79,8 +89,7 @@ class _RegisterConfirmPageState extends State<RegisterConfirmPage> {
                 decoration: BoxDecoration(
                   color: AppColors.primary.withOpacity(0.06),
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(
-                      color: AppColors.primary.withOpacity(0.2)),
+                  border: Border.all(color: AppColors.primary.withOpacity(0.2)),
                 ),
                 child: Column(
                   children: [
@@ -102,21 +111,24 @@ class _RegisterConfirmPageState extends State<RegisterConfirmPage> {
                     Text(
                       widget.patient.nomComplet,
                       style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.w700),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
                     const SizedBox(height: 20),
-                    _InfoRow(label: 'NNI',
-                        valeur: widget.patient.nni),
+                    _InfoRow(label: t.nni, valeur: widget.patient.nni),
                     if (widget.patient.dateOfBirth != null)
                       _InfoRow(
-                          label:  'Date de naissance',
-                          valeur: widget.patient.dateOfBirth!),
+                        label: t.dateDeNaissance,
+                        valeur: widget.patient.dateOfBirth!,
+                      ),
                     if (widget.patient.gender != null)
                       _InfoRow(
-                          label:  'Sexe',
-                          valeur: widget.patient.gender == 'M'
-                              ? 'Masculin'
-                              : 'Féminin'),
+                        label: t.sexe,
+                        valeur: widget.patient.gender == 'M'
+                            ? t.masculin
+                            : t.feminin,
+                      ),
                   ],
                 ),
               ),
@@ -124,9 +136,10 @@ class _RegisterConfirmPageState extends State<RegisterConfirmPage> {
               const SizedBox(height: 28),
 
               // ── Numéro de téléphone ──────────────────────
-              const Text('Numéro de téléphone',
-                  style: TextStyle(
-                      fontSize: 16, fontWeight: FontWeight.w600)),
+              Text(
+                t.numeroTel,
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
               const SizedBox(height: 8),
               TextFormField(
                 controller: _phoneCtrl,
@@ -137,7 +150,7 @@ class _RegisterConfirmPageState extends State<RegisterConfirmPage> {
                 ),
                 validator: (v) {
                   if (v == null || v.trim().length < 8) {
-                    return 'Numéro invalide';
+                    return t.numInvalid;
                   }
                   return null;
                 },
@@ -153,11 +166,13 @@ class _RegisterConfirmPageState extends State<RegisterConfirmPage> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: AppColors.primary,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(14)),
+                      borderRadius: BorderRadius.circular(14),
+                    ),
                   ),
-                  child: const Text('Continuer',
-                      style: TextStyle(
-                          fontSize: 16, color: Colors.white)),
+                  child: Text(
+                    t.continuer,
+                    style: TextStyle(fontSize: 16, color: Colors.white),
+                  ),
                 ),
               ),
             ],
@@ -179,11 +194,11 @@ class _InfoRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(label,
-              style: const TextStyle(color: Colors.grey, fontSize: 13)),
-          Text(valeur,
-              style: const TextStyle(
-                  fontWeight: FontWeight.w600, fontSize: 13)),
+          Text(label, style: const TextStyle(color: Colors.grey, fontSize: 13)),
+          Text(
+            valeur,
+            style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
+          ),
         ],
       ),
     );

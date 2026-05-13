@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sahha_pass/core/constants/app_colors.dart';
+import 'package:sahha_pass/l10n/build_context_l10n.dart';
 import 'package:sahha_pass/passport_medical/presentation/bloc/home_bloc/home_bloc.dart';
 import 'package:sahha_pass/passport_medical/presentation/bloc/home_bloc/home_state.dart';
 import 'package:sahha_pass/passport_medical/presentation/widgets/custom_card_patient.dart';
@@ -10,6 +11,7 @@ class PassportMedical extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return Scaffold(
       appBar: AppBar(
         title: Text("صحتي Passeport"),
@@ -50,9 +52,9 @@ class PassportMedical extends StatelessWidget {
                 ),
                 child: Row(
                   children: [
-                    customButton("Télécharger PDF", Icons.download),
+                    customButton(t.telechargerPDF, Icons.download),
                     Spacer(),
-                    customButton("Partager", Icons.share),
+                    customButton(t.partager, Icons.share),
                   ],
                 ),
               ),
@@ -76,7 +78,7 @@ class PassportMedical extends StatelessWidget {
                     Icon(Icons.warning, color: AppColors.language),
                     SizedBox(width: 5),
                     Text(
-                      "Allergies: ",
+                      "${t.allergies}: ",
                       style: TextStyle(color: AppColors.error, fontSize: 12),
                     ),
                     SizedBox(width: 10),
@@ -103,7 +105,7 @@ class PassportMedical extends StatelessWidget {
                   children: [
                     customCardInfo(
                       context,
-                      "GROUPE SANGUIN",
+                      t.groupeSanguin,
                       patient.bloodType,
                       Icons.water_drop,
                       AppColors.error,
@@ -111,7 +113,7 @@ class PassportMedical extends StatelessWidget {
                     ),
                     customCardInfo(
                       context,
-                      "MEDECIN TRAITANT:",
+                      t.medeclinTraitant,
                       patient.treatingDoctorId,
                       Icons.local_hospital,
                       AppColors.success,
@@ -119,7 +121,7 @@ class PassportMedical extends StatelessWidget {
                     ),
                     customCardInfo(
                       context,
-                      "CONTACT D'URGENCE",
+                      t.contactUrgence,
                       "",
                       Icons.phone,
                       AppColors.notfication,
@@ -127,7 +129,7 @@ class PassportMedical extends StatelessWidget {
                     ),
                     customCardInfo(
                       context,
-                      "ALLERGIES",
+                      t.allergies,
                       "",
                       Icons.warning,
                       AppColors.error,

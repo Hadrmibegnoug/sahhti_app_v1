@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'package:sahha_pass/core/constants/app_alerts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/router/app_routes.dart';
+import '../../../../core/services/locale_service.dart';
+import '../../../../l10n/build_context_l10n.dart';
 import '../../../data/datasources/profile_datasource.dart';
 import '../../../data/models/profile/profile_model.dart';
 import '../../bloc/profile_bloc/profile_bloc.dart';
@@ -13,7 +16,8 @@ import '../../bloc/profile_bloc/profile_event.dart';
 import '../../bloc/profile_bloc/profile_state.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+  final LocaleService localeService;
+  const ProfilePage({super.key, required this.localeService});
 
   @override
   Widget build(BuildContext context) {
@@ -21,16 +25,18 @@ class ProfilePage extends StatelessWidget {
       create: (_) =>
           ProfileBloc(ProfileDatasource(Supabase.instance.client))
             ..add(ProfileCharge()),
-      child: const _ProfileView(),
+      child: _ProfileView(localeService: localeService),
     );
   }
 }
 
 class _ProfileView extends StatelessWidget {
-  const _ProfileView();
+  final LocaleService localeService;
+  const _ProfileView({required this.localeService});
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return BlocListener<ProfileBloc, ProfileState>(
       listener: (ctx, state) {
         // Déconnexion réussie → login
@@ -40,14 +46,14 @@ class _ProfileView extends StatelessWidget {
 
         // Mise à jour réussie
         if (state is ProfileMisAJourSucces) {
-          AppAlerts.succes(ctx, 'Profil mis à jour');
+          AppAlerts.succes(ctx, t.profilMisAJour);
           // Recharger le profil
           ctx.read<ProfileBloc>().add(ProfileCharge());
         }
 
         // PIN changé
         if (state is ProfilePinSucces) {
-          AppAlerts.succes(ctx, 'Code PIN changé avec succès');
+          AppAlerts.succes(ctx, t.codePinChangeAvecSucces);
         }
 
         // Erreur
@@ -74,10 +80,7 @@ class _ProfileView extends StatelessWidget {
               automaticallyImplyLeading: false,
               backgroundColor: AppColors.primary,
               elevation: 0,
-              title: const Text(
-                'Mon Profil',
-                style: TextStyle(color: Colors.white),
-              ),
+              title: Text(t.monProfil, style: TextStyle(color: Colors.white)),
             ),
             body: SingleChildScrollView(
               child: Column(
@@ -88,19 +91,19 @@ class _ProfileView extends StatelessWidget {
                   const SizedBox(height: 10),
 
                   // ── Informations personnelles ─────────────────
-                  const _SectionLabel('INFORMATIONS PERSONNELLES'),
+                  _SectionLabel(t.informationsPersonnelles),
                   _CardData(
                     children: [
                       _RowInfo(
                         couleur: AppColors.primary.withOpacity(0.1),
                         icon: Icons.person,
                         iconColor: AppColors.primary,
-                        title: 'Données Personnelles',
+                        title: t.donneesPersonnelles,
                         sousTitre: profile != null
                             ? '${profile.firstName} · '
                                   '${profile.gender == 'M' ? 'Masculin' : 'Féminin'} · '
                                   '${profile.dateOfBirth.year}-${profile.dateOfBirth.month}-${profile.dateOfBirth.day}'
-                            : 'Nom · Sexe · Date de naissance',
+                            : '${t.nom} · ${t.sexe} · ${t.dateDeNaissance}',
                         onTap: () =>
                             _ouvrirDonneesPersonnelles(context, profile),
                       ),
@@ -109,10 +112,10 @@ class _ProfileView extends StatelessWidget {
                         couleur: AppColors.error.withOpacity(0.1),
                         icon: Icons.water_drop_rounded,
                         iconColor: AppColors.error,
-                        title: 'Données médicales de base',
+                        title: t.donneesMedicales,
                         sousTitre: profile != null
-                            ? '${profile.bloodType} · Allergies · Antécédents'
-                            : 'Groupe sanguin · Allergies · Antécédents',
+                            ? '${profile.bloodType} · ${t.allergies} · ${t.antecedents}'
+                            : '${t.groupeSanguin} · ${t.allergies} · ${t.antecedents}',
                         onTap: () {},
                       ),
                       _Divider(),
@@ -120,32 +123,31 @@ class _ProfileView extends StatelessWidget {
                         couleur: Colors.amber.withOpacity(0.1),
                         icon: Icons.lock,
                         iconColor: Colors.amber[700]!,
-                        title: 'Changer mon PIN',
-                        sousTitre: 'Réinitialiser via ancien PIN',
+                        title: t.changerMonPin,
+                        sousTitre: t.reinitialiseViaAncienPIN,
                         onTap: () => _ouvrirChangerPin(context),
                       ),
                     ],
                   ),
 
                   // ── Préférences ───────────────────────────────
-                  const _SectionLabel('PRÉFÉRENCES'),
+                  _SectionLabel(t.preferences),
                   _CardData(
                     children: [
-                      _RowInfo(
+                      _RowInfoAvecSwitch(
                         couleur: Colors.blue.withOpacity(0.1),
-                        icon: Icons.language_rounded,
+                        icon: PhosphorIconsRegular.globe,
                         iconColor: Colors.blue[800]!,
-                        title: 'Langue',
-                        sousTitre: 'Français / العربية',
-                        onTap: () {},
+                        title: t.langue,
+                        child: _SwitchLangue(localeService: localeService),
                       ),
                       _Divider(),
                       _RowInfo(
                         couleur: Colors.yellow.withOpacity(0.15),
                         icon: Icons.notifications,
                         iconColor: Colors.yellow[800]!,
-                        title: 'Rappels RDV',
-                        sousTitre: 'Push + SMS · J-1 et H-2',
+                        title: t.rappelsRDV,
+                        sousTitre: t.rappelsRDVSubtitle,
                         onTap: () {},
                       ),
                       _Divider(),
@@ -153,8 +155,8 @@ class _ProfileView extends StatelessWidget {
                         couleur: Colors.red.withOpacity(0.1),
                         icon: Icons.health_and_safety_outlined,
                         iconColor: Colors.red[800]!,
-                        title: 'Rappels médicaments',
-                        sousTitre: 'Traitements en cours',
+                        title: t.rappelsMedicaments,
+                        sousTitre: t.rappelsMedicamentsSubtitle,
                         onTap: () {},
                       ),
                       _Divider(),
@@ -162,8 +164,8 @@ class _ProfileView extends StatelessWidget {
                         couleur: Colors.grey.withOpacity(0.1),
                         icon: Icons.fingerprint,
                         iconColor: Colors.black87,
-                        title: 'Biométrie',
-                        sousTitre: 'Face ID / Empreinte digitale',
+                        title: t.biometrie,
+                        sousTitre: t.biometrieSubtitle,
                         trailing: Switch(
                           value: false,
                           onChanged: (_) {},
@@ -175,15 +177,15 @@ class _ProfileView extends StatelessWidget {
                   ),
 
                   // ── Sécurité & Données ────────────────────────
-                  const _SectionLabel('SÉCURITÉ & DONNÉES'),
+                  _SectionLabel(t.securiteDonnees),
                   _CardData(
                     children: [
                       _RowInfo(
                         couleur: AppColors.primary.withOpacity(0.1),
                         icon: Icons.history,
                         iconColor: AppColors.primary,
-                        title: "Historique d'accès",
-                        sousTitre: 'Qui a consulté mon dossier',
+                        title: t.historiqueAcces,
+                        sousTitre: t.quiAConsulte,
                         onTap: () {},
                       ),
                       _Divider(),
@@ -191,7 +193,7 @@ class _ProfileView extends StatelessWidget {
                         couleur: AppColors.error.withOpacity(0.1),
                         icon: Icons.logout,
                         iconColor: AppColors.error,
-                        title: 'Se déconnecter',
+                        title: t.seDeconnecter,
                         sousTitre: '',
                         showArrow: false,
                         trailing: state is ProfileChargement
@@ -207,9 +209,9 @@ class _ProfileView extends StatelessWidget {
                         onTap: () async {
                           final confirm = await AppAlerts.confirmation(
                             context,
-                            titre: 'Se déconnecter',
-                            message: 'Voulez-vous vraiment vous déconnecter ?',
-                            labelConfirmer: 'Déconnecter',
+                            titre: t.seDeconnecter,
+                            message: t.confirmationDeconnexion,
+                            labelConfirmer: t.seDeconnecter,
                             dangereux: true,
                           );
                           if (confirm == true) {
@@ -324,6 +326,7 @@ class _ProfilHero extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     final nom = profile?.nomComplet ?? 'Chargement...';
     final tel = profile?.phone ?? '';
 
@@ -387,7 +390,7 @@ class _ProfilHero extends StatelessWidget {
                 ),
                 if (profile!.gender != null)
                   _Badge(
-                    label: profile!.gender == 'M' ? 'Masculin' : 'Féminin',
+                    label: profile!.gender == 'M' ? t.masculin : t.feminin,
                   ),
               ],
             ),
@@ -814,6 +817,119 @@ class _RowInfo extends StatelessWidget {
                     : const SizedBox.shrink()),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _SwitchLangue extends StatelessWidget {
+  final LocaleService localeService;
+  const _SwitchLangue({required this.localeService});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListenableBuilder(
+      listenable: localeService,
+      builder: (context, _) {
+        final estFr = localeService.locale.languageCode == 'fr';
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _BoutonLanguage(
+              label: 'FR',
+              actif: estFr,
+              onTap: () => localeService.changer('fr'),
+            ),
+            const SizedBox(width: 8),
+            _BoutonLanguage(
+              label: 'ع',
+              actif: !estFr,
+              onTap: () => localeService.changer('ar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class _BoutonLanguage extends StatelessWidget {
+  final String label;
+  final bool actif;
+  final VoidCallback onTap;
+  const _BoutonLanguage({
+    required this.label,
+    required this.actif,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 200),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
+        decoration: BoxDecoration(
+          color: actif ? AppColors.primary : Colors.transparent,
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(
+            color: actif ? AppColors.primary : Colors.grey.shade300,
+          ),
+        ),
+        child: Text(
+          label,
+          style: TextStyle(
+            color: actif ? Colors.white : Colors.grey,
+            fontWeight: FontWeight.w700,
+            fontSize: 13,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ── Row avec widget custom (pas de flèche) ────────────────────────
+class _RowInfoAvecSwitch extends StatelessWidget {
+  final Color couleur;
+  final IconData icon;
+  final Color iconColor;
+  final String title;
+  final Widget child;
+
+  const _RowInfoAvecSwitch({
+    required this.couleur,
+    required this.icon,
+    required this.iconColor,
+    required this.title,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 12),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: couleur,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: PhosphorIcon(icon, color: iconColor, size: 20),
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              title,
+              style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+            ),
+          ),
+          // ← Le switch langue à droite
+          child,
+        ],
       ),
     );
   }
