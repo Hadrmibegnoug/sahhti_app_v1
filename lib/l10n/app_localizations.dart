@@ -98,7 +98,7 @@ abstract class AppLocalizations {
     Locale('fr'),
   ];
 
-  /// No description provided for @appName.
+  /// Nom de l'application
   ///
   /// In fr, this message translates to:
   /// **'Sahhti'**
@@ -140,72 +140,6 @@ abstract class AppLocalizations {
   /// **'Dossier médical'**
   String get dossierMedical;
 
-  /// No description provided for @connexion.
-  ///
-  /// In fr, this message translates to:
-  /// **'Connexion'**
-  String get connexion;
-
-  /// No description provided for @inscription.
-  ///
-  /// In fr, this message translates to:
-  /// **'Inscription'**
-  String get inscription;
-
-  /// No description provided for @codePIN.
-  ///
-  /// In fr, this message translates to:
-  /// **'Code PIN'**
-  String get codePIN;
-
-  /// No description provided for @votreTelephone.
-  ///
-  /// In fr, this message translates to:
-  /// **'Votre téléphone'**
-  String get votreTelephone;
-
-  /// No description provided for @confirmerRdv.
-  ///
-  /// In fr, this message translates to:
-  /// **'Confirmer le rendez-vous'**
-  String get confirmerRdv;
-
-  /// No description provided for @rdvConfirme.
-  ///
-  /// In fr, this message translates to:
-  /// **'Rendez-vous confirmé'**
-  String get rdvConfirme;
-
-  /// No description provided for @erreurConnexion.
-  ///
-  /// In fr, this message translates to:
-  /// **'Téléphone ou code PIN incorrect'**
-  String get erreurConnexion;
-
-  /// No description provided for @seDeconnecter.
-  ///
-  /// In fr, this message translates to:
-  /// **'Se déconnecter'**
-  String get seDeconnecter;
-
-  /// No description provided for @bonjour.
-  ///
-  /// In fr, this message translates to:
-  /// **'Bonjour'**
-  String get bonjour;
-
-  /// No description provided for @groupeSanguin.
-  ///
-  /// In fr, this message translates to:
-  /// **'Groupe sanguin'**
-  String get groupeSanguin;
-
-  /// No description provided for @allergies.
-  ///
-  /// In fr, this message translates to:
-  /// **'Allergies'**
-  String get allergies;
-
   /// No description provided for @ordonnances.
   ///
   /// In fr, this message translates to:
@@ -218,11 +152,221 @@ abstract class AppLocalizations {
   /// **'Vaccins'**
   String get vaccins;
 
+  /// No description provided for @connexion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Connexion'**
+  String get connexion;
+
+  /// No description provided for @inscription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Inscription'**
+  String get inscription;
+
+  /// No description provided for @seDeconnecter.
+  ///
+  /// In fr, this message translates to:
+  /// **'Se déconnecter'**
+  String get seDeconnecter;
+
+  /// No description provided for @annuler.
+  ///
+  /// In fr, this message translates to:
+  /// **'Annuler'**
+  String get annuler;
+
+  /// No description provided for @confirmer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer'**
+  String get confirmer;
+
+  /// No description provided for @retour.
+  ///
+  /// In fr, this message translates to:
+  /// **'Retour'**
+  String get retour;
+
+  /// No description provided for @reessayer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Réessayer'**
+  String get reessayer;
+
+  /// No description provided for @sauvegarder.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sauvegarder'**
+  String get sauvegarder;
+
+  /// No description provided for @fermer.
+  ///
+  /// In fr, this message translates to:
+  /// **'Fermer'**
+  String get fermer;
+
+  /// No description provided for @suivant.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suivant'**
+  String get suivant;
+
+  /// No description provided for @valider.
+  ///
+  /// In fr, this message translates to:
+  /// **'Valider'**
+  String get valider;
+
+  /// No description provided for @votreTelephone.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre téléphone'**
+  String get votreTelephone;
+
+  /// No description provided for @codePIN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Code PIN'**
+  String get codePIN;
+
+  /// No description provided for @votrePIN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre code PIN'**
+  String get votrePIN;
+
+  /// No description provided for @confirmerPIN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmez votre code PIN'**
+  String get confirmerPIN;
+
+  /// No description provided for @choisirPIN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Choisissez votre code PIN'**
+  String get choisirPIN;
+
+  /// No description provided for @ancienPIN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ancien code PIN'**
+  String get ancienPIN;
+
+  /// No description provided for @nouveauPIN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau code PIN'**
+  String get nouveauPIN;
+
+  /// No description provided for @changerPIN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Changer mon code PIN'**
+  String get changerPIN;
+
+  /// No description provided for @pinDifferents.
+  ///
+  /// In fr, this message translates to:
+  /// **'Les codes ne correspondent pas. Recommencez.'**
+  String get pinDifferents;
+
+  /// No description provided for @pinObligatoire.
+  ///
+  /// In fr, this message translates to:
+  /// **'4 chiffres — remplace votre mot de passe'**
+  String get pinObligatoire;
+
+  /// No description provided for @votreNNI.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre NNI'**
+  String get votreNNI;
+
+  /// No description provided for @saisiNNI.
+  ///
+  /// In fr, this message translates to:
+  /// **'Saisissez votre Numéro National d\'Identité'**
+  String get saisiNNI;
+
+  /// No description provided for @nniIntrouvable.
+  ///
+  /// In fr, this message translates to:
+  /// **'NNI introuvable. Vérifiez votre numéro.'**
+  String get nniIntrouvable;
+
+  /// No description provided for @verifierNNI.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérifier mon NNI'**
+  String get verifierNNI;
+
+  /// No description provided for @verificationSMS.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérification SMS'**
+  String get verificationSMS;
+
+  /// No description provided for @codeSMSEnvoye.
+  ///
+  /// In fr, this message translates to:
+  /// **'Un code à 6 chiffres a été envoyé au'**
+  String get codeSMSEnvoye;
+
+  /// No description provided for @renvoyerCode.
+  ///
+  /// In fr, this message translates to:
+  /// **'Renvoyer le code'**
+  String get renvoyerCode;
+
+  /// No description provided for @verifierCode.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérifier le code'**
+  String get verifierCode;
+
+  /// No description provided for @codeRenvoye.
+  ///
+  /// In fr, this message translates to:
+  /// **'Code renvoyé !'**
+  String get codeRenvoye;
+
+  /// No description provided for @etape.
+  ///
+  /// In fr, this message translates to:
+  /// **'Étape {numero}/3'**
+  String etape(int numero);
+
+  /// No description provided for @bonjour.
+  ///
+  /// In fr, this message translates to:
+  /// **'Bonjour {prenom} 👋'**
+  String bonjour(String prenom);
+
+  /// No description provided for @pasEncoreInscrit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Pas encore inscrit ? S\'inscrire'**
+  String get pasEncoreInscrit;
+
+  /// No description provided for @dejaInscrit.
+  ///
+  /// In fr, this message translates to:
+  /// **'Déjà inscrit ? Se connecter'**
+  String get dejaInscrit;
+
   /// No description provided for @monQrCode.
   ///
   /// In fr, this message translates to:
-  /// **'Mon QR Code'**
+  /// **'Mon QR Code & PIN'**
   String get monQrCode;
+
+  /// No description provided for @qrCodeDescription.
+  ///
+  /// In fr, this message translates to:
+  /// **'Présentez ce QR code et votre PIN à votre médecin pour autoriser l\'accès à votre dossier.'**
+  String get qrCodeDescription;
 
   /// No description provided for @masquer.
   ///
@@ -247,6 +391,360 @@ abstract class AppLocalizations {
   /// In fr, this message translates to:
   /// **'Copié ✓'**
   String get copie;
+
+  /// No description provided for @nepasPartagerPIN.
+  ///
+  /// In fr, this message translates to:
+  /// **'Ne partagez votre PIN qu\'en consultation'**
+  String get nepasPartagerPIN;
+
+  /// No description provided for @groupeSanguin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Groupe sanguin'**
+  String get groupeSanguin;
+
+  /// No description provided for @allergies.
+  ///
+  /// In fr, this message translates to:
+  /// **'Allergies'**
+  String get allergies;
+
+  /// No description provided for @antecedents.
+  ///
+  /// In fr, this message translates to:
+  /// **'Antécédents'**
+  String get antecedents;
+
+  /// No description provided for @aucuneAllergie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune allergie'**
+  String get aucuneAllergie;
+
+  /// No description provided for @donneesPersonnelles.
+  ///
+  /// In fr, this message translates to:
+  /// **'Données Personnelles'**
+  String get donneesPersonnelles;
+
+  /// No description provided for @donneesMedicales.
+  ///
+  /// In fr, this message translates to:
+  /// **'Données médicales de base'**
+  String get donneesMedicales;
+
+  /// No description provided for @historiqueAcces.
+  ///
+  /// In fr, this message translates to:
+  /// **'Historique d\'accès'**
+  String get historiqueAcces;
+
+  /// No description provided for @quiAConsulte.
+  ///
+  /// In fr, this message translates to:
+  /// **'Qui a consulté mon dossier'**
+  String get quiAConsulte;
+
+  /// No description provided for @specialites.
+  ///
+  /// In fr, this message translates to:
+  /// **'Spécialités'**
+  String get specialites;
+
+  /// No description provided for @suivisIndicateurs.
+  ///
+  /// In fr, this message translates to:
+  /// **'Suivi des indicateurs'**
+  String get suivisIndicateurs;
+
+  /// No description provided for @poidsActuel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Poids Actuel'**
+  String get poidsActuel;
+
+  /// No description provided for @carnetVaccination.
+  ///
+  /// In fr, this message translates to:
+  /// **'Carnet de vaccination'**
+  String get carnetVaccination;
+
+  /// No description provided for @complet.
+  ///
+  /// In fr, this message translates to:
+  /// **'Complet'**
+  String get complet;
+
+  /// No description provided for @rappel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rappel'**
+  String get rappel;
+
+  /// No description provided for @dose.
+  ///
+  /// In fr, this message translates to:
+  /// **'{recu}/{total} dose(s)'**
+  String dose(int recu, int total);
+
+  /// No description provided for @chercherMedecin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rechercher un médecin...'**
+  String get chercherMedecin;
+
+  /// No description provided for @tous.
+  ///
+  /// In fr, this message translates to:
+  /// **'Tous'**
+  String get tous;
+
+  /// No description provided for @aucunMedecinTrouve.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucun médecin trouvé'**
+  String get aucunMedecinTrouve;
+
+  /// No description provided for @prendreRDV.
+  ///
+  /// In fr, this message translates to:
+  /// **'Prendre RDV'**
+  String get prendreRDV;
+
+  /// No description provided for @aPropos.
+  ///
+  /// In fr, this message translates to:
+  /// **'À propos'**
+  String get aPropos;
+
+  /// No description provided for @disponibilites.
+  ///
+  /// In fr, this message translates to:
+  /// **'Disponibilités'**
+  String get disponibilites;
+
+  /// No description provided for @aucuneDisponibilite.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune disponibilité enregistrée.'**
+  String get aucuneDisponibilite;
+
+  /// No description provided for @typeConsultation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Type de consultation'**
+  String get typeConsultation;
+
+  /// No description provided for @presentiel.
+  ///
+  /// In fr, this message translates to:
+  /// **'Présentiel'**
+  String get presentiel;
+
+  /// No description provided for @teleconsultation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Téléconsultation'**
+  String get teleconsultation;
+
+  /// No description provided for @dateRendezVous.
+  ///
+  /// In fr, this message translates to:
+  /// **'Date du rendez-vous'**
+  String get dateRendezVous;
+
+  /// No description provided for @selectionnerDate.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sélectionner une date'**
+  String get selectionnerDate;
+
+  /// No description provided for @motifConsultation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Motif de consultation'**
+  String get motifConsultation;
+
+  /// No description provided for @motifHint.
+  ///
+  /// In fr, this message translates to:
+  /// **'Décrivez brièvement votre motif...'**
+  String get motifHint;
+
+  /// No description provided for @confirmerRDV.
+  ///
+  /// In fr, this message translates to:
+  /// **'Confirmer le rendez-vous'**
+  String get confirmerRDV;
+
+  /// No description provided for @selectionnerDisponibilite.
+  ///
+  /// In fr, this message translates to:
+  /// **'Veuillez sélectionner une disponibilité.'**
+  String get selectionnerDisponibilite;
+
+  /// No description provided for @rdvConfirme.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rendez-vous confirmé avec {nom} ✓'**
+  String rdvConfirme(String nom);
+
+  /// No description provided for @aucuneConversation.
+  ///
+  /// In fr, this message translates to:
+  /// **'Aucune conversation'**
+  String get aucuneConversation;
+
+  /// No description provided for @contactezMedecin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Appuyez sur + pour contacter un médecin'**
+  String get contactezMedecin;
+
+  /// No description provided for @contacterMedecin.
+  ///
+  /// In fr, this message translates to:
+  /// **'Contacter un médecin'**
+  String get contacterMedecin;
+
+  /// No description provided for @votreMMessage.
+  ///
+  /// In fr, this message translates to:
+  /// **'Votre message...'**
+  String get votreMMessage;
+
+  /// No description provided for @nouveau.
+  ///
+  /// In fr, this message translates to:
+  /// **'Nouveau'**
+  String get nouveau;
+
+  /// No description provided for @monProfil.
+  ///
+  /// In fr, this message translates to:
+  /// **'Mon Profil'**
+  String get monProfil;
+
+  /// No description provided for @informationsPersonnelles.
+  ///
+  /// In fr, this message translates to:
+  /// **'INFORMATIONS PERSONNELLES'**
+  String get informationsPersonnelles;
+
+  /// No description provided for @preferences.
+  ///
+  /// In fr, this message translates to:
+  /// **'PRÉFÉRENCES'**
+  String get preferences;
+
+  /// No description provided for @securiteDonnees.
+  ///
+  /// In fr, this message translates to:
+  /// **'SÉCURITÉ & DONNÉES'**
+  String get securiteDonnees;
+
+  /// No description provided for @langue.
+  ///
+  /// In fr, this message translates to:
+  /// **'Langue'**
+  String get langue;
+
+  /// No description provided for @langueSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Français / العربية'**
+  String get langueSubtitle;
+
+  /// No description provided for @rappelsRDV.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rappels RDV'**
+  String get rappelsRDV;
+
+  /// No description provided for @rappelsRDVSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Push + SMS · J-1 et H-2'**
+  String get rappelsRDVSubtitle;
+
+  /// No description provided for @rappelsMedicaments.
+  ///
+  /// In fr, this message translates to:
+  /// **'Rappels médicaments'**
+  String get rappelsMedicaments;
+
+  /// No description provided for @rappelsMedicamentsSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Traitements en cours'**
+  String get rappelsMedicamentsSubtitle;
+
+  /// No description provided for @biometrie.
+  ///
+  /// In fr, this message translates to:
+  /// **'Biométrie'**
+  String get biometrie;
+
+  /// No description provided for @biometrieSubtitle.
+  ///
+  /// In fr, this message translates to:
+  /// **'Face ID / Empreinte digitale'**
+  String get biometrieSubtitle;
+
+  /// No description provided for @confirmationDeconnexion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Voulez-vous vraiment vous déconnecter ?'**
+  String get confirmationDeconnexion;
+
+  /// No description provided for @version.
+  ///
+  /// In fr, this message translates to:
+  /// **'Sahhti v1.0.0 · صحتي'**
+  String get version;
+
+  /// No description provided for @erreurConnexion.
+  ///
+  /// In fr, this message translates to:
+  /// **'Numéro ou code PIN incorrect.'**
+  String get erreurConnexion;
+
+  /// No description provided for @erreurReseau.
+  ///
+  /// In fr, this message translates to:
+  /// **'Vérifiez votre connexion.'**
+  String get erreurReseau;
+
+  /// No description provided for @erreurGenerale.
+  ///
+  /// In fr, this message translates to:
+  /// **'Une erreur est survenue. Réessayez.'**
+  String get erreurGenerale;
+
+  /// No description provided for @connexionFaible.
+  ///
+  /// In fr, this message translates to:
+  /// **'Connexion lente. Vérifiez votre réseau.'**
+  String get connexionFaible;
+
+  /// No description provided for @profilIntrouvable.
+  ///
+  /// In fr, this message translates to:
+  /// **'Profil patient introuvable.'**
+  String get profilIntrouvable;
+
+  /// No description provided for @mru.
+  ///
+  /// In fr, this message translates to:
+  /// **'{montant} MRU'**
+  String mru(int montant);
+
+  /// No description provided for @note.
+  ///
+  /// In fr, this message translates to:
+  /// **'{valeur} ⭐'**
+  String note(String valeur);
 }
 
 class _AppLocalizationsDelegate
