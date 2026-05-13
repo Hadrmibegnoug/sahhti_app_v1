@@ -21,4 +21,6 @@ class AppRoutes {
   static const String specialiteDetail = '/dossier/specialite';
   // core/router/app_routes.dart — ajouter
   static const String otpVerification = '/register/otp';
+  static const String profil = '/profil';
+
 }

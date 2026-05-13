@@ -12,6 +12,7 @@ import '../../bloc/chat_bloc/conversaton_bloc/conversation_bloc.dart';
 import '../../bloc/chat_bloc/conversaton_bloc/conversation_event.dart';
 import '../../bloc/chat_bloc/conversaton_bloc/conversation_state.dart';
 import 'chat_page.dart';
+import 'package:sahha_pass/l10n/build_context_l10n.dart';
 
 class ChoixMedecinPage extends StatelessWidget {
   const ChoixMedecinPage({super.key});
@@ -31,6 +32,7 @@ class MedecinPageCharges extends StatelessWidget {
   const MedecinPageCharges({super.key});
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return BlocListener<ConversationBloc, ConversationState>(
       listener: (context, state) {
         if (state is ConversationCreee) {
@@ -50,8 +52,8 @@ class MedecinPageCharges extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: AppColors.primary,
-          title: const Text(
-            'Contacter un médecin',
+          title: Text(
+            t.contacterMedecin,
             style: TextStyle(color: Colors.white),
           ),
           leading: IconButton(
@@ -65,14 +67,14 @@ class MedecinPageCharges extends StatelessWidget {
               return const Center(child: CircularProgressIndicator());
             }
             if (state is NouvelleConversationChargement) {
-              return const Center(
+              return Center(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     CircularProgressIndicator(color: AppColors.primary),
                     SizedBox(height: 16),
                     Text(
-                      'Ouverture de la conversation...',
+                      t.ouvertureConversation,
                       style: TextStyle(color: Colors.grey),
                     ),
                   ],
@@ -83,9 +85,9 @@ class MedecinPageCharges extends StatelessWidget {
             // ← Médecins chargés — afficher la liste
             if (state is DocteursPourChatLoaded) {
               if (state.doctors.isEmpty) {
-                return const Center(
+                return Center(
                   child: Text(
-                    'Aucun médecin disponible.',
+                    t.aucunMedecinTrouve,
                     style: TextStyle(color: Colors.grey),
                   ),
                 );
@@ -108,7 +110,7 @@ class MedecinPageCharges extends StatelessWidget {
                       onPressed: () => context.read<ConversationBloc>().add(
                         const DocteursPourChatCharges(),
                       ),
-                      child: const Text('Réessayer'),
+                      child: Text(t.reessayer),
                     ),
                   ],
                 ),

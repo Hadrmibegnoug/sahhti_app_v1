@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 import '../../../core/constants/app_colors.dart';
+import '../../../l10n/build_context_l10n.dart';
 import '../bloc/home_bloc/home_bloc.dart';
 import '../bloc/home_bloc/home_event.dart';
 import '../bloc/home_bloc/home_state.dart';
@@ -13,6 +14,7 @@ class CustomCardPin extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
@@ -44,8 +46,8 @@ class CustomCardPin extends StatelessWidget {
                   size: 16,
                 ),
                 const SizedBox(width: 6),
-                const Text(
-                  'MON QR CODE & PIN',
+                Text(
+                  t.monQrCode,
                   style: TextStyle(
                     color: AppColors.primary,
                     fontSize: 12,
@@ -100,9 +102,7 @@ class CustomCardPin extends StatelessWidget {
                     children: [
                       // Description
                       Text(
-                        'Présentez ce QR code et votre PIN '
-                        'à votre médecin pour autoriser '
-                        'l\'accès à votre dossier.',
+                        t.qrCodeDescription,
                         style: TextStyle(
                           color: AppColors.primary.withOpacity(0.6),
                           fontSize: 10,
@@ -113,8 +113,8 @@ class CustomCardPin extends StatelessWidget {
                       const SizedBox(height: 12),
 
                       // Label PIN
-                      const Text(
-                        'CODE PIN',
+                      Text(
+                        t.codePIN,
                         style: TextStyle(
                           color: AppColors.primary,
                           fontSize: 10,
@@ -137,7 +137,7 @@ class CustomCardPin extends StatelessWidget {
                             icon: state.piVisible
                                 ? Icons.visibility_off
                                 : Icons.visibility,
-                            label: state.piVisible ? 'Masquer' : 'Voir',
+                            label: state.piVisible ? t.masquer : t.voir,
                             onTap: () => context.read<HomeBloc>().add(
                               HomePinVisibiliyChange(),
                             ),
@@ -145,7 +145,7 @@ class CustomCardPin extends StatelessWidget {
                           const SizedBox(width: 6),
                           _ActionBtn(
                             icon: Icons.copy,
-                            label: state.pinCopy ? 'Copié ✓' : 'Copier',
+                            label: state.pinCopy ? '${t.copier} ✓' : t.copier,
                             color: state.pinCopy ? Colors.green : null,
                             onTap: () =>
                                 context.read<HomeBloc>().add(HomePinCopy()),
@@ -166,7 +166,7 @@ class CustomCardPin extends StatelessWidget {
                           const SizedBox(width: 4),
                           Expanded(
                             child: Text(
-                              'Ne partagez votre PIN qu\'en consultation',
+                              t.nepasPartagerPIN,
                               style: TextStyle(
                                 fontSize: 8.5,
                                 color: AppColors.error.withOpacity(0.8),

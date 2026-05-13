@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sahha_pass/core/constants/app_colors.dart';
-import 'package:sahha_pass/passport_medical/data/models/medecin_rdv/appointments.dart';
+import '../../../l10n/build_context_l10n.dart';
+import '../../data/models/data_medical/rdv_detail_model.dart';
 import '../bloc/home_bloc/home_state.dart';
 
 class CardRdv extends StatelessWidget {
@@ -8,9 +9,22 @@ class CardRdv extends StatelessWidget {
 
   final HomeLoaded state;
 
+  String _traduireSpecialite(t, String specialite) {
+    final s = specialite.toLowerCase();
+    if (s == 'cardiologue') return t.cardiologue;
+    if (s == 'pediatre' || s == 'pédiatre') return t.pediatre;
+    if (s == 'ophtalmologue') return t.ophtalmologue;
+    if (s == 'neprologue') return t.neprologue;
+    if (s == 'dermatologue') return t.dermatologue;
+    if (s == 'Médecin Généraliste') return t.medGeneraliste;
+    if (s == 'Gynécologue') return t.gynecologue;
+    return specialite;
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<AppointmentsModel> rdv = state.mesRendezVous;
+    final t = context.l10n;
+    List<RdvDetailModel> rdv = state.mesRendezVous;
     return Container(
       width: double.infinity,
       //height: MediaQuery.of(context).size.height * 0.35,
@@ -31,20 +45,20 @@ class CardRdv extends StatelessWidget {
                       children: [
                         Icon(Icons.calendar_month, color: AppColors.error),
                         //SizedBox(width: 5),
-                        Text("PROCHAINS RENDEZ VOUS"),
+                        Text(t.prochainsRdv, style: TextStyle(fontSize: 16)),
                       ],
                     ),
                     Spacer(),
                     TextButton.icon(
                       onPressed: () {},
-                      label: Text("Voir tout"),
+                      label: Text(t.voirTout),
                       icon: Icon(Icons.turn_right),
                     ),
                   ],
                 ),
                 Divider(color: AppColors.cardShadow, height: 20),
                 rdv.isEmpty
-                    ? Center(child: Text("Aucun rendez vous trouvé"))
+                    ? Center(child: Text(t.aucunRdvTrouve))
                     : SizedBox.shrink(),
                 ...rdv.map((e) {
                   final statut = e.status;
@@ -77,14 +91,14 @@ class CardRdv extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  e.type,
+                                  _traduireSpecialite(t, e.medecinSpecialite),
                                   style: TextStyle(
                                     fontSize: 15,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
                                 Text(
-                                  '${e.appointmentDate.year}-${e.appointmentDate.month}-${e.appointmentDate.day} ${e.startTime}',
+                                  '${e.appointmentDate.toLocal().toString().split(' ')[0]} ${t.at} ${e.startTime.hour.toString()}:${e.startTime.minute.toString().padLeft(2, '0')}',
                                   style: TextStyle(fontSize: 10),
                                 ),
                               ],
@@ -100,7 +114,12 @@ class CardRdv extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(20),
                               ),
                               child: Text(
-                                e.status,
+                                switch (e.status) {
+                                  "confirmed" => t.confirme,
+                                  "pending" => t.pending,
+                                  "cancelled" => t.cancelled,
+                                  _ => e.status,
+                                },
                                 style: TextStyle(
                                   fontSize: 10,
                                   color: AppColors.background,

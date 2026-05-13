@@ -8,6 +8,7 @@ import 'package:sahha_pass/passport_medical/presentation/bloc/medecin_bloc/medec
 import 'package:sahha_pass/passport_medical/presentation/bloc/medecin_bloc/medecin_event.dart';
 import 'package:sahha_pass/passport_medical/presentation/bloc/medecin_bloc/medecin_state.dart';
 
+import '../../../../l10n/build_context_l10n.dart';
 import '../../../data/models/messagerie/conversations.dart';
 
 class MedecinDetailPage extends StatelessWidget {
@@ -17,13 +18,17 @@ class MedecinDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     context.read<MedecinBloc>().add(MedecinDetailOuvert(doctor));
 
     return BlocListener<MedecinBloc, MedecinState>(
       listener: (ctx, state) {
         if (state is RdvSucces) {
           Navigator.of(context).pop(true);
-          AppAlerts.succes(context, 'RDV confirmé avec ${doctor.nomComplet}');
+          AppAlerts.succes(
+            context,
+            '${t.rdvConfirmeAvec} ${doctor.nomComplet}',
+          );
         }
         if (state is MedecinError) {
           AppAlerts.erreur(context, state.message);
@@ -57,8 +62,8 @@ class MedecinDetailPage extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   // ── Disponibilités cliquables ──────────────
-                  const Text(
-                    'Choisir une disponibilité',
+                  Text(
+                    t.choisirUneDisponibilite,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(height: 10),
@@ -66,8 +71,8 @@ class MedecinDetailPage extends StatelessWidget {
                   state.availibilitiesLoading
                       ? const Center(child: CircularProgressIndicator())
                       : state.availibilities.isEmpty
-                      ? const Text(
-                          'Aucune disponibilité.',
+                      ? Text(
+                          t.aucuneDisponibilite,
                           style: TextStyle(color: Colors.grey),
                         )
                       : _DisponibilitesList(
@@ -78,15 +83,15 @@ class MedecinDetailPage extends StatelessWidget {
                   const SizedBox(height: 20),
 
                   // ── Type de consultation ───────────────────
-                  const Text(
-                    'Type de consultation',
+                  Text(
+                    t.typeConsultation,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(height: 10),
                   Row(
                     children: [
                       _TypeChip(
-                        label: 'Présentiel',
+                        label: t.presentiel,
                         icon: Icons.person,
                         selected: state.rdvType == 'in_person',
                         onTap: () => context.read<MedecinBloc>().add(
@@ -95,7 +100,7 @@ class MedecinDetailPage extends StatelessWidget {
                       ),
                       const SizedBox(width: 12),
                       _TypeChip(
-                        label: 'Téléconsultation',
+                        label: t.teleconsultation,
                         icon: Icons.video_call,
                         selected: state.rdvType == 'teleconsult',
                         onTap: () => context.read<MedecinBloc>().add(
@@ -115,7 +120,7 @@ class MedecinDetailPage extends StatelessWidget {
                       if (state.disponibiliteSelectionnee == null) {
                         AppAlerts.avertissement(
                           context,
-                          'Veuillez sélectionner une disponibilité.',
+                          t.choisirUneDisponibilite,
                         );
                         return;
                       }
@@ -332,6 +337,7 @@ class _InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16),
@@ -349,8 +355,8 @@ class _InfoCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'À propos',
+          Text(
+            t.aPropos,
             style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 8),
@@ -449,6 +455,7 @@ class _MotifEtConfirmerState extends State<_MotifEtConfirmer> {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -484,8 +491,8 @@ class _MotifEtConfirmerState extends State<_MotifEtConfirmer> {
           ),
 
         // Motif
-        const Text(
-          'Motif de consultation',
+        Text(
+          t.motifConsultation,
           style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
         ),
         const SizedBox(height: 8),
@@ -493,7 +500,7 @@ class _MotifEtConfirmerState extends State<_MotifEtConfirmer> {
           controller: _ctrl,
           maxLines: 3,
           decoration: InputDecoration(
-            hintText: 'Décrivez brièvement votre motif...',
+            hintText: t.motifHint,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
@@ -528,8 +535,8 @@ class _MotifEtConfirmerState extends State<_MotifEtConfirmer> {
                 ? const CircularProgressIndicator(color: Colors.white)
                 : Text(
                     widget.disponibiliteSelectionnee == null
-                        ? 'Sélectionnez une disponibilité'
-                        : 'Confirmer le rendez-vous',
+                        ? t.choisirUneDisponibilite
+                        : t.confirmerRDV,
                     style: const TextStyle(
                       fontSize: 16,
                       color: Colors.white,

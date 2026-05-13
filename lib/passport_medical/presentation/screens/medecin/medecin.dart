@@ -9,18 +9,10 @@ import 'package:sahha_pass/passport_medical/presentation/bloc/medecin_bloc/medec
 import 'package:sahha_pass/passport_medical/presentation/screens/medecin/medecin_detail_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../../l10n/build_context_l10n.dart';
+
 class MedecinListPage extends StatelessWidget {
   const MedecinListPage({super.key});
-
-  static const _specialites = [
-    'Tous',
-    'Cardiologue',
-    'Médecin Généraliste',
-    'Dermatologue',
-    'Gynécologue',
-    'Pédiatre',
-    'Ophtalmologie',
-  ];
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -32,22 +24,38 @@ class MedecinListPage extends StatelessWidget {
   }
 }
 
+class SpecialiteItem {
+  final String key;
+  final String label;
+
+  const SpecialiteItem({required this.key, required this.label});
+}
+
 class _Medecin extends StatelessWidget {
   const _Medecin();
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
+    final specialites = [
+      SpecialiteItem(key: 'Tous', label: t.tous),
+      SpecialiteItem(key: 'Cardiologue', label: t.cardiologue),
+      SpecialiteItem(key: 'Médecin Généraliste', label: t.medGeneraliste),
+      SpecialiteItem(key: 'Dermatologue', label: t.dermatologue),
+      SpecialiteItem(key: 'Gynécologue', label: t.gynecologue),
+      SpecialiteItem(key: 'Pédiatre', label: t.pediatre),
+      SpecialiteItem(key: 'Ophtalmologue', label: t.ophtalmologue),
+    ];
     return Scaffold(
       body: BlocBuilder<MedecinBloc, MedecinState>(
         builder: (context, state) {
-          //final active = state is MedecinLoaded ? state.specialityActive : null;
           final medecins = state is MedecinLoaded
               ? state.medecinsFiltres
               : <DoctorsModel>[];
 
           return RefreshIndicator(
             onRefresh: () async {
-              context.read<MedecinBloc>().add(const MedecinPageOuverte());
+              context.read<MedecinBloc>().add(MedecinPageOuverte());
               await context.read<MedecinBloc>().stream.firstWhere(
                 (s) => s is MedecinLoaded || s is MedecinError,
               );
@@ -63,7 +71,7 @@ class _Medecin extends StatelessWidget {
                       ),
                       decoration: InputDecoration(
                         suffixIcon: Icon(Icons.location_on),
-                        labelText: "Nom du médecin",
+                        labelText: t.momMedecin,
                         prefixIcon: Icon(Icons.search),
                       ),
                     ),
@@ -80,23 +88,25 @@ class _Medecin extends StatelessWidget {
                         return ListView.separated(
                           scrollDirection: Axis.horizontal,
                           padding: EdgeInsets.symmetric(horizontal: 16),
-                          itemCount: MedecinListPage._specialites.length,
+                          itemCount: specialites.length,
                           separatorBuilder: (_, _) => const SizedBox(width: 8),
                           itemBuilder: (context, index) {
-                            final spec = MedecinListPage._specialites[index];
-                            final isTous = spec == 'Tous';
+                            final spec = specialites[index];
+                            final isTous = spec.key == 'Tous';
                             final isActivie = isTous
                                 ? active == null
-                                : active == spec;
+                                : active == spec.key;
                             return ChoiceChip(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25),
                               ),
-                              label: Text(spec),
+                              label: Text(spec.label),
                               selected: isActivie,
                               onSelected: (_) =>
                                   context.read<MedecinBloc>().add(
-                                    SpecialitySelected(isTous ? null : spec),
+                                    SpecialitySelected(
+                                      isTous ? null : spec.key,
+                                    ),
                                   ),
                             );
                           },
@@ -120,7 +130,7 @@ class _Medecin extends StatelessWidget {
                 if (state is MedecinLoaded)
                   medecins.isEmpty
                       ? SliverFillRemaining(
-                          child: Center(child: Text("Aucun Medecin Trouvé")),
+                          child: Center(child: Text(t.aucunMedecinTrouve)),
                         )
                       : SliverList(
                           //shrinkWrap: true,
@@ -148,23 +158,6 @@ class _Medecin extends StatelessWidget {
       ),
     );
   }
-
-  // Container speciality_selected() {
-  //   return Container(
-  //     margin: EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-  //     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-  //     decoration: BoxDecoration(
-  //       color: AppColors.primary.withOpacity(0.3),
-  //       borderRadius: BorderRadius.circular(25),
-  //     ),
-  //     child: Text(
-  //       "Cardiologue",
-  //       style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold),
-  //     ),
-  //   );
-  // }
-  // _customDoctorCard(
-  //                             doctorsModel: medecins[index],
 }
 
 class _customDoctorCard extends StatelessWidget {
@@ -173,6 +166,7 @@ class _customDoctorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       width: double.infinity,
@@ -311,7 +305,7 @@ class _customDoctorCard extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     child: Text(
-                      "Prendre RDV",
+                      t.prendreRDV,
                       style: TextStyle(
                         color: AppColors.background,
                         fontSize: 10,

@@ -24,7 +24,7 @@ class HomeLoaded extends HomeState {
   final String pin;
   final bool piVisible;
   final bool pinCopy;
-  final List<AppointmentsModel> mesRendezVous;
+  final List<RdvDetailModel> mesRendezVous;
   final int nbOrdonnances;
   final int nbVaccins;
   final int nbConsultations;
@@ -100,7 +100,7 @@ class HomeLoaded extends HomeState {
     bool? piVisible,
     bool? pinCopy,
     String? prochainRdv,
-    List<AppointmentsModel>? mesRendezVous,
+    List<RdvDetailModel>? mesRendezVous,
     int? nbOrdonnances,
     int? nbVaccins,
     int? nbConsultations,

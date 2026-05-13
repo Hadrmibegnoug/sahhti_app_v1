@@ -6,6 +6,8 @@ abstract class NavigationEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class ProfileChargeNav extends NavigationEvent {}
+
 class NavigationOngletChange extends NavigationEvent {
   final int index;
   const NavigationOngletChange(this.index);

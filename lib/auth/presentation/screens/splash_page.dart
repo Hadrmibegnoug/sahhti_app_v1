@@ -6,6 +6,12 @@ import 'package:sahha_pass/core/constants/app_colors.dart';
 import '../../../core/router/app_router.dart';
 import '../../../core/router/app_routes.dart';
 
+import 'package:sahha_pass/l10n/generated/app_localizations.dart';
+
+extension BuildContextL10n on BuildContext {
+  AppLocalizations get l10n => AppLocalizations.of(this);
+}
+
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
   @override
@@ -36,6 +42,7 @@ class _SplashPageState extends State<SplashPage> {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return Scaffold(
       backgroundColor: AppColors.primary,
       body: Center(
@@ -54,8 +61,8 @@ class _SplashPageState extends State<SplashPage> {
               ),
             ),
             const SizedBox(height: 20),
-            const Text(
-              'Sahhti',
+            Text(
+              t.appName,
               style: TextStyle(
                 fontSize: 36,
                 fontWeight: FontWeight.w700,
@@ -65,7 +72,7 @@ class _SplashPageState extends State<SplashPage> {
             ),
             const SizedBox(height: 4),
             Text(
-              'صحتي',
+              t.appName,
               style: TextStyle(
                 fontSize: 24,
                 color: Colors.white.withOpacity(0.6),

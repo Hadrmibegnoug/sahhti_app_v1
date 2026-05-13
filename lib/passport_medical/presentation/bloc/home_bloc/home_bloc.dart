@@ -51,7 +51,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       final e = resultats.map((element) => log(element.toString()));
       log("Data: $resultats");
       log("data: $e");
-      final appoitements = resultats[0] as List<AppointmentsModel>;
+      final appoitements = resultats[0] as List<RdvDetailModel>;
       final counts = resultats[1] as LengthTableModel;
       final patient = resultats[2] as PatientModel;
       final allergie = resultats[3] as List<PatientAllergiesModel>;
@@ -158,7 +158,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       final e = resultats.map((element) => log(element.toString()));
       log("Data: $resultats");
       log("data: $e");
-      final appoitements = resultats[0] as List<AppointmentsModel>;
+      final appoitements = resultats[0] as List<RdvDetailModel>;
       final counts = resultats[1] as LengthTableModel;
       final patient = resultats[2] as PatientModel;
       final allergie = resultats[3] as List<PatientAllergiesModel>;

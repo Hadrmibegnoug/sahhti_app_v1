@@ -9,6 +9,11 @@ import '../../data/models/registry_patient_model.dart';
 import '../bloc/auth_bloc.dart';
 import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
+import 'package:sahha_pass/l10n/generated/app_localizations.dart';
+
+extension BuildContextL10n on BuildContext {
+  AppLocalizations get l10n => AppLocalizations.of(this);
+}
 
 class OtpVerificationPage extends StatefulWidget {
   final String telephone;
@@ -102,6 +107,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
 
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
     return BlocListener<AuthBloc, AuthState>(
       listener: (ctx, state) {
         if (state is AuthConnecte) {
@@ -109,7 +115,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
         }
         if (state is OtpRenvoyeChargement) {
           setState(() => _renvoyeOk = true);
-          AppAlerts.succes(ctx, 'Code renvoyé avec succès');
+          AppAlerts.succes(ctx, t.codeRenvAvecSucces);
         }
         if (state is AuthErreur) {
           // Vider les champs et afficher l'erreur
@@ -137,8 +143,8 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                 const SizedBox(height: 20),
 
                 // ── En-tête ─────────────────────────────────
-                const Text(
-                  'Vérification SMS',
+                Text(
+                  t.verificationSMS,
                   style: TextStyle(
                     fontSize: 26,
                     fontWeight: FontWeight.w700,
@@ -147,7 +153,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Un code à 6 chiffres a été envoyé au\n'
+                  '${t.codeSMSEnvoye}\n'
                   '${widget.telephone}',
                   style: TextStyle(
                     fontSize: 14,
@@ -231,8 +237,8 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                                 color: AppColors.primary,
                                 strokeWidth: 2,
                               )
-                            : const Text(
-                                'Vérifier le code',
+                            : Text(
+                                t.verifierCode,
                                 style: TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w600,
@@ -262,8 +268,8 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                                   strokeWidth: 2,
                                 ),
                               )
-                            : const Text(
-                                'Renvoyer le code',
+                            : Text(
+                                t.renvoyerCode,
                                 style: TextStyle(
                                   color: Colors.white70,
                                   fontSize: 14,

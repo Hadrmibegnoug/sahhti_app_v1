@@ -6,38 +6,40 @@ import 'package:sahha_pass/core/constants/app_colors.dart';
 import 'package:sahha_pass/passport_medical/presentation/bloc/home_bloc/home_bloc.dart';
 import 'package:sahha_pass/passport_medical/presentation/bloc/home_bloc/home_state.dart';
 
+import '../../../../l10n/build_context_l10n.dart';
+
 class SpecialiteDetailPage extends StatelessWidget {
   final String specialite;
   const SpecialiteDetailPage({super.key, required this.specialite});
-
-  Color _couleurStatut(String statut) {
-    switch (statut) {
-      case 'confirmed':
-        return Colors.green;
-      case 'pending':
-        return Colors.orange;
-      case 'cancelled':
-        return Colors.red;
-      default:
-        return Colors.grey;
-    }
-  }
-
-  String _traduireStatut(String statut) {
-    switch (statut) {
-      case 'confirmed':
-        return 'Confirmé';
-      case 'pending':
-        return 'En attente';
-      case 'cancelled':
-        return 'Annulé';
-      default:
-        return statut;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final t = context.l10n;
+    Color couleurStatut(String statut) {
+      switch (statut) {
+        case 'confirmed':
+          return Colors.green;
+        case 'pending':
+          return Colors.orange;
+        case 'cancelled':
+          return Colors.red;
+        default:
+          return Colors.grey;
+      }
+    }
+
+    String traduireStatut(String statut) {
+      switch (statut) {
+        case 'confirmed':
+          return t.confirme;
+        case 'pending':
+          return t.pending;
+        case 'cancelled':
+          return t.cancelled;
+        default:
+          return statut;
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(specialite),
@@ -67,7 +69,7 @@ class SpecialiteDetailPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 12),
                   Text(
-                    'Aucun RDV en $specialite',
+                    '${t.aucunRdvEn} $specialite',
                     style: const TextStyle(color: Colors.grey),
                   ),
                 ],
@@ -78,10 +80,10 @@ class SpecialiteDetailPage extends StatelessWidget {
           return ListView.separated(
             padding: const EdgeInsets.all(16),
             itemCount: rdvs.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 10),
+            separatorBuilder: (_, __) => SizedBox(height: 10),
             itemBuilder: (context, index) {
               final rdv = rdvs[index];
-              final couleur = _couleurStatut(rdv.status);
+              final couleur = couleurStatut(rdv.status);
 
               return Container(
                 padding: const EdgeInsets.all(14),
@@ -123,7 +125,7 @@ class SpecialiteDetailPage extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
-                            _traduireStatut(rdv.status),
+                            traduireStatut(rdv.status),
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
@@ -146,7 +148,9 @@ class SpecialiteDetailPage extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          rdv.appointmentDate.toString(),
+                          rdv.appointmentDate.toLocal().toString().split(
+                            ' ',
+                          )[0],
                           style: const TextStyle(
                             fontSize: 12,
                             color: Colors.grey,
@@ -160,7 +164,7 @@ class SpecialiteDetailPage extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          '${rdv.startTime}',
+                          '${rdv.startTime.hour.toString().padLeft(2, '0')}:${rdv.startTime.minute.toString().padLeft(2, '0')}',
                           style: const TextStyle(
                             fontSize: 12,
                             color: Colors.grey,

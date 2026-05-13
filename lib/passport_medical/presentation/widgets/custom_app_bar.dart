@@ -12,14 +12,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primary,
-        boxShadow: [BoxShadow(blurRadius: 20.0, offset: Offset(0, 2))],
-        borderRadius: BorderRadius.vertical(bottom: Radius.circular(25)),
+        boxShadow: [BoxShadow(blurRadius: 10.0, offset: Offset(0, 2))],
+        borderRadius: BorderRadius.vertical(bottom: Radius.circular(15)),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Expanded(
             child: Column(
@@ -36,11 +36,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ),
                 //SizedBox(height: 2),
                 Text(
-                  "jeudi 12 mars 2026",
+                  '${DateTime.now().hour.toString().padLeft(2, '0')}:${DateTime.now().minute.toString().padLeft(2, '0')}',
                   style: Theme.of(context).textTheme.titleSmall!.copyWith(
                     color: Theme.of(
                       context,
-                    ).colorScheme.onPrimaryContainer.withOpacity(0.2),
+                    ).colorScheme.onPrimaryContainer.withOpacity(0.7),
                     fontSize: 10,
                   ),
                 ),
